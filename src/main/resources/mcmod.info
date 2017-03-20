@@ -1,0 +1,16 @@
+[
+{
+  "modid": "nhc",
+  "name": "NH-Core",
+  "description": "Core mod for all my mods.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["nhave"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
