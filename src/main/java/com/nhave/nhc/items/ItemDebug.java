@@ -1,14 +1,22 @@
 package com.nhave.nhc.items;
 
+import java.util.List;
+
 import com.nhave.nhc.NHCore;
 import com.nhave.nhc.Reference;
+import com.nhave.nhc.api.items.IHudItem;
 import com.nhave.nhc.api.items.IInventoryItemAdvanced;
+import com.nhave.nhc.api.items.IKeyBound;
+import com.nhave.nhc.api.items.IMouseWheel;
+import com.nhave.nhc.network.Key;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
 
-public class ItemDebug extends Item implements IInventoryItemAdvanced
+public class ItemDebug extends Item implements IInventoryItemAdvanced, IKeyBound, IMouseWheel, IHudItem
 {
 	public ItemDebug(String name)
 	{
@@ -48,5 +56,18 @@ public class ItemDebug extends Item implements IInventoryItemAdvanced
 	public boolean renderStackOverlay(ItemStack stack, int slot)
 	{
 		return false;
+	}
+
+	@Override
+	public void doKeyBindingAction(EntityPlayer entityPlayer, ItemStack itemStack, Key key, boolean chat)
+	{
+		if (chat) entityPlayer.sendMessage(new TextComponentString(key.name()));
+	}
+
+	@Override
+	public void addHudInfo(ItemStack stack, EntityPlayer player, List list, boolean isArmor)
+	{
+		list.add("TEST");
+		list.add(stack.getDisplayName());
 	}
 }

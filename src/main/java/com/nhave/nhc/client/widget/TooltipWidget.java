@@ -24,11 +24,11 @@ public class TooltipWidget
 			boolean draw = false;
 			for (int i = 0; i < WIDGETS.size(); ++i)
 			{
-				if (WIDGETS.get(i).shouldDraw(event))
+				if (WIDGETS.get(i).shouldDraw(event.getStack()))
 				{
 					draw = true;
-					texWidth = Math.max(texWidth, WIDGETS.get(i).getSizeX(event));
-					currentY -= (WIDGETS.get(i).getSizeY(event) + 2);
+					texWidth = Math.max(texWidth, WIDGETS.get(i).getSizeX(event.getStack()));
+					currentY -= (WIDGETS.get(i).getSizeY(event.getStack()) + 2);
 				}
 			}
 			if (!draw) return;
@@ -46,10 +46,10 @@ public class TooltipWidget
 			
 			for (int i = 0; i < WIDGETS.size(); ++i)
 			{
-				if (WIDGETS.get(i).shouldDraw(event))
+				if (WIDGETS.get(i).shouldDraw(event.getStack()))
 				{
-					WIDGETS.get(i).drawWidget(event, currentX, currentY);
-					currentY += (WIDGETS.get(i).getSizeY(event) + 2);
+					WIDGETS.get(i).drawWidget(event.getStack(), currentX, currentY);
+					currentY += (WIDGETS.get(i).getSizeY(event.getStack()) + 2);
 				}
 			}
 			
@@ -67,5 +67,10 @@ public class TooltipWidget
 	public static void register(WidgetBase widget)
 	{
 		WIDGETS.add(widget);
+	}
+	
+	public static ArrayList<WidgetBase> getWidgets()
+	{
+		return WIDGETS;		
 	}
 }

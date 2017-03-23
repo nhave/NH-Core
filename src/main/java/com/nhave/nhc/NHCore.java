@@ -1,7 +1,10 @@
 package com.nhave.nhc;
 
+import java.io.File;
+
 import org.apache.logging.log4j.Logger;
 
+import com.nhave.nhc.network.PacketHandler;
 import com.nhave.nhc.proxy.CommonProxy;
 import com.nhave.nhc.registry.ModBlocks;
 import com.nhave.nhc.registry.ModCrafting;
@@ -33,8 +36,11 @@ public class NHCore
     public void preInit(FMLPreInitializationEvent event)
     {
     	logger = event.getModLog();
-		proxy.setupConfig(event.getSuggestedConfigurationFile());
-
+		proxy.setupConfig(new File(event.getModConfigurationDirectory(), "nhcore.cfg"));
+		
+		PacketHandler.init();
+		proxy.registerKeybindings();
+		
     	ModItems.init();
     	ModItems.register();
     	ModBlocks.init();

@@ -11,30 +11,28 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent.PostText;
 
 public class WidgetInventory extends WidgetBase
 {
 	public static ResourceLocation WIDGET_RESOURCE = new ResourceLocation("nhc", "textures/misc/widget.png");
-	
-	public int getSizeX(RenderTooltipEvent.PostText event)
+
+	@Override
+	public int getSizeX(ItemStack stack)
 	{
-		ItemStack stack = event.getStack();
 		IInventoryItem item = (IInventoryItem) stack.getItem();
 		return (18 * item.getInventoryX(stack)) + 10;
 	}
-	
-	public int getSizeY(RenderTooltipEvent.PostText event)
+
+	@Override
+	public int getSizeY(ItemStack stack)
 	{
-		ItemStack stack = event.getStack();
 		IInventoryItem item = (IInventoryItem) stack.getItem();
 		return (18 * item.getInventoryY(stack)) + 10;
 	}
-	
-	public void drawWidget(RenderTooltipEvent.PostText event, int x, int y)
+
+	@Override
+	public void drawWidget(ItemStack stack, int x, int y)
 	{
-		ItemStack stack = event.getStack();
 		IInventoryItem item = (IInventoryItem) stack.getItem();
 		
 		Minecraft mc = Minecraft.getMinecraft();
@@ -103,9 +101,8 @@ public class WidgetInventory extends WidgetBase
 	}
 	
 	@Override
-	public boolean shouldDraw(PostText event)
+	public boolean shouldDraw(ItemStack stack)
 	{
-		ItemStack stack = event.getStack();
-		return event.getStack().getItem() instanceof IInventoryItem && ((IInventoryItem) stack.getItem()).getInventoryX(stack) > 0 && ((IInventoryItem) stack.getItem()).getInventoryY(stack) > 0;
+		return stack.getItem() instanceof IInventoryItem && ((IInventoryItem) stack.getItem()).getInventoryX(stack) > 0 && ((IInventoryItem) stack.getItem()).getInventoryY(stack) > 0;
 	}
 }

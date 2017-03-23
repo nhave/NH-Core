@@ -37,11 +37,11 @@ public class ItemHelper
 	public static ItemStack getCurrentItemOrArmor(EntityPlayer player, int slot)
 	{
 		if (slot == 0) return player.getHeldItemMainhand();
-		else if (slot == 1) return player.inventory.armorItemInSlot(0);
-		else if (slot == 2) return player.inventory.armorItemInSlot(1);
-		else if (slot == 3) return player.inventory.armorItemInSlot(2);
-		else if (slot == 4) return player.inventory.armorItemInSlot(3);
-		else if (slot == 5) return player.getHeldItemOffhand();
+		else if (slot == 1) return player.getHeldItemOffhand();
+		else if (slot == 2) return player.inventory.armorItemInSlot(0);
+		else if (slot == 3) return player.inventory.armorItemInSlot(1);
+		else if (slot == 4) return player.inventory.armorItemInSlot(2);
+		else if (slot == 5) return player.inventory.armorItemInSlot(3);
 		else return null;
 	}
 }

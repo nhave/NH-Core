@@ -1,14 +1,14 @@
 package com.nhave.nhc.client.widget;
 
-import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraft.item.ItemStack;
 
 public abstract class WidgetBase
 {
-	public abstract int getSizeX(RenderTooltipEvent.PostText event);
+	public abstract int getSizeX(ItemStack stack);
 	
-	public abstract int getSizeY(RenderTooltipEvent.PostText event);
+	public abstract int getSizeY(ItemStack stack);
 	
-	public abstract void drawWidget(RenderTooltipEvent.PostText event, int x, int y);
+	public abstract void drawWidget(ItemStack stack, int x, int y);
 	
-	public abstract boolean shouldDraw(RenderTooltipEvent.PostText event);
+	public abstract boolean shouldDraw(ItemStack stack);
 }

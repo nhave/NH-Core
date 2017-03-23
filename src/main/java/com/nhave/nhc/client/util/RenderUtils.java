@@ -71,6 +71,25 @@ public abstract class RenderUtils
         LEFT,
         RIGHT,
         BOTTOM_LEFT,
-        BOTTOM_RIGHT
+        BOTTOM_RIGHT;
+        
+        public static String[] getStringValues()
+        {
+        	String[] values = new String[values().length];
+        	for (int i = 0; i < values.length; ++i)
+        	{
+        		values[i] = values()[i].name();
+        	}
+        	return values;
+        }
+        
+        public static int getFromString(String value)
+        {
+        	for (int i = 0; i < values().length; ++i)
+        	{
+        		if (values()[i].name().equals(value)) return i;
+        	}
+        	return 0;
+        }
     }
 }

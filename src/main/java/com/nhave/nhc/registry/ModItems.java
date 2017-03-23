@@ -3,24 +3,26 @@ package com.nhave.nhc.registry;
 import com.nhave.nhc.Reference;
 import com.nhave.nhc.client.widget.TooltipWidget;
 import com.nhave.nhc.client.widget.WidgetInventory;
+import com.nhave.nhc.items.ItemDebug;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems
 {
-	//public static Item itemDebug;
+	public static Item itemDebug;
 	
 	public static void init()
 	{
-		//itemDebug = new ItemDebug("debugger");
+		itemDebug = new ItemDebug("debugger");
 	}
 	
 	public static void register()
 	{
-		//GameRegistry.register(itemDebug);
+		GameRegistry.register(itemDebug);
 	}
 	
 	public static void registerWidgets()
@@ -30,7 +32,7 @@ public class ModItems
 	
 	public static void registerRenders()
 	{
-		//registerRender(itemDebug);
+		registerRender(itemDebug);
 	}
 	
 	public static void registerRender(Item item)
