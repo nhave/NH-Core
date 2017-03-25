@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "nhc:blocks/toolstation_top",
+        "front": "nhc:blocks/toolstation_front",
+        "side": "nhc:blocks/toolstation_side",
+        "down": "nhc:blocks/toolstation_bottom"
+    }
+}

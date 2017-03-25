@@ -1,7 +1,9 @@
-package com.nhave.nhc.tickhandlers;
+package com.nhave.nhc.client.tickhandlers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.nhave.nhc.api.client.ITickingData;
 
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;

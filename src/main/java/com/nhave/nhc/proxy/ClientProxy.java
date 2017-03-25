@@ -2,14 +2,14 @@ package com.nhave.nhc.proxy;
 
 import java.io.File;
 
+import com.nhave.nhc.client.eventhandlers.KeyInputEventHandler;
+import com.nhave.nhc.client.tickhandlers.DataTickHandler;
+import com.nhave.nhc.client.tickhandlers.HudTickHandler;
 import com.nhave.nhc.client.widget.TooltipWidget;
-import com.nhave.nhc.eventhandlers.KeyInputEventHandler;
 import com.nhave.nhc.network.KeyBinds;
 import com.nhave.nhc.registry.ModBlocks;
 import com.nhave.nhc.registry.ModConfig;
 import com.nhave.nhc.registry.ModItems;
-import com.nhave.nhc.tickhandlers.DataTickHandler;
-import com.nhave.nhc.tickhandlers.HudTickHandler;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;

@@ -12,7 +12,6 @@ import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.registry.ModTweaks;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -66,7 +65,7 @@ public class NHCore
 		@Override
 		public ItemStack getTabIconItem()
 		{
-			return new ItemStack(Items.APPLE);
+			return new ItemStack(ModBlocks.blockToolStation);
 		}
 	};
 }

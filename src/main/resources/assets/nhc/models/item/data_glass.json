@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures":
+    {
+        "layer0": "nhc:items/data_glass_0",
+        "layer1": "nhc:items/data_glass_1"
+    }
+}

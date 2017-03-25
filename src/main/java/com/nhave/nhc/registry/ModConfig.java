@@ -75,7 +75,7 @@ public class ModConfig
         hudOffsetY = config.get("client", "HUDOffset-Y", Defaults.hudOffsetY, "The HUD display will be shifted vertically by this value. This value may be negative.").getInt(Defaults.hudOffsetY);
         hudScale = Math.abs(config.get("client", "HUDScale", Defaults.hudScale, "How large the HUD will be rendered. Default is 1.0, can be bigger or smaller").setMinValue(0.001D).getDouble(Defaults.hudScale));
         showHudWhileChatting = config.get("client", "ShowHUDwhilechatting", Defaults.showHudWhileChatting, "When enabled, the HUD will display even when the chat window is opened.").getBoolean(Defaults.showHudWhileChatting);
-        enableHud = config.get("client", "EnableHud", Defaults.enableHud, "When enabled, ItemModes Will be shown in the HUD").getBoolean(Defaults.enableHud);
+        //enableHud = config.get("client", "EnableHud", Defaults.enableHud, "When enabled, ItemModes Will be shown in the HUD").getBoolean(Defaults.enableHud);
 		postModeToChat = config.get("client", "PostModeToChat", Defaults.postModeToChat, "Set to true if you have too much stuff on your HUD").getBoolean(Defaults.postModeToChat);
 	}
 }

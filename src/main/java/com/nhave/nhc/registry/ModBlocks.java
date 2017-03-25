@@ -1,6 +1,9 @@
 package com.nhave.nhc.registry;
 
 import com.nhave.nhc.Reference;
+import com.nhave.nhc.blocks.BlockToolStation;
+import com.nhave.nhc.client.render.RenderTileToolStation;
+import com.nhave.nhc.tiles.TileEntityToolStation;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -8,15 +11,31 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks
 {
-	public static void init() {}
+	public static Block blockToolStation;
 	
-	public static void register() {}
+	public static void init()
+	{
+		blockToolStation = new BlockToolStation("toolstation");
+		
+		GameRegistry.registerTileEntity(com.nhave.nhc.tiles.TileEntityToolStation.class, "TileToolStation");
+	}
 	
-	public static void registerRenders() {}
+	public static void register()
+	{
+		registerBlock(blockToolStation);
+	}
+	
+	public static void registerRenders()
+	{
+		registerRender(blockToolStation);
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityToolStation.class, new RenderTileToolStation());
+	}
 	
 	public static void registerBlock(Block block)
 	{

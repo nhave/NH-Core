@@ -1,4 +1,4 @@
-package com.nhave.nhc.eventhandlers;
+package com.nhave.nhc.client.eventhandlers;
 
 import com.nhave.nhc.api.items.IKeyBound;
 import com.nhave.nhc.api.items.IMouseWheel;

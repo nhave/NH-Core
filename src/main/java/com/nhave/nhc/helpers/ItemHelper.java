@@ -34,6 +34,18 @@ public class ItemHelper
 		}
 	}
 	
+	/**
+	 * Gets the players current item or armor
+	 * 0. Mainhand Item
+	 * 1. Offhand Item
+	 * 2. Boots
+	 * 3. Leggings
+	 * 4. Chest
+	 * 5. Helmet
+	 * 
+	 * @param player
+	 * @param slot
+	 */
 	public static ItemStack getCurrentItemOrArmor(EntityPlayer player, int slot)
 	{
 		if (slot == 0) return player.getHeldItemMainhand();

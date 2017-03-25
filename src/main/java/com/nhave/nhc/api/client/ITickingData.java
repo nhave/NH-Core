@@ -1,4 +1,4 @@
-package com.nhave.nhc.tickhandlers;
+package com.nhave.nhc.api.client;
 
 public interface ITickingData
 {

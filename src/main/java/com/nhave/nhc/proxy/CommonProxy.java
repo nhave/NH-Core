@@ -2,10 +2,10 @@ package com.nhave.nhc.proxy;
 
 import java.io.File;
 
+import com.nhave.nhc.eventhandlers.ToolStationEventHandler;
 import com.nhave.nhc.registry.ModConfig;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class CommonProxy
 {
@@ -21,6 +21,6 @@ public class CommonProxy
 	
 	public void registerEventHandlers()
 	{
-    	
+    	MinecraftForge.EVENT_BUS.register(new ToolStationEventHandler());
 	}
 }
