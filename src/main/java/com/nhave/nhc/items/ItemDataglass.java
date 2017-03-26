@@ -5,10 +5,12 @@ import java.util.List;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.nhave.nhc.Reference;
+import com.nhave.nhc.api.items.IChromaAcceptor;
 import com.nhave.nhc.api.items.IHudDisplay;
 import com.nhave.nhc.api.items.IInventoryItem;
 import com.nhave.nhc.helpers.TooltipHelper;
 import com.nhave.nhc.registry.ModItems;
+import com.nhave.nhc.shaders.ShaderManager;
 import com.nhave.nhc.util.ItemUtil;
 
 import net.minecraft.client.renderer.color.IItemColor;
@@ -18,7 +20,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemColor, IInventoryItem
+public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemColor, IInventoryItem, IChromaAcceptor
 {
 	private String name;
 	
@@ -74,28 +76,20 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemCo
 	@Override
 	public int getColorFromItemstack(ItemStack stack, int pass)
 	{
-		int color = 16777215;
-		
-		if (ItemUtil.getItemFromStack(stack, "CHROMA") != null && ItemUtil.getItemFromStack(stack, "CHROMA").getItem() == ModItems.itemChroma)
-		{
-			ItemStack stackChroma = ItemUtil.getItemFromStack(stack, "CHROMA");
-			
-			color = ((ItemChroma) ItemUtil.getItemFromStack(stack, "CHROMA").getItem()).getChroma(stackChroma).getColor();
-		}
-		
+		int color = ShaderManager.hasChroma(stack) ? ShaderManager.getChroma(stack).getColor() : 16777215;
 		return pass == 1 ? color : 16777215;
 	}
 
 	@Override
 	public int getInventoryX(ItemStack stack)
 	{
-		return (ItemUtil.getItemFromStack(stack, "CHROMA") != null && ItemUtil.getItemFromStack(stack, "CHROMA").getItem() == ModItems.itemChroma) ? 1 : 0;
+		return (ShaderManager.hasChroma(stack)) ? 1 : 0;
 	}
 
 	@Override
 	public int getInventoryY(ItemStack stack)
 	{
-		return (ItemUtil.getItemFromStack(stack, "CHROMA") != null && ItemUtil.getItemFromStack(stack, "CHROMA").getItem() == ModItems.itemChroma) ? 1 : 0;
+		return (ShaderManager.hasChroma(stack)) ? 1 : 0;
 	}
 
 	@Override

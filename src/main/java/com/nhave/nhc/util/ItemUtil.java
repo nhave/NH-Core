@@ -58,8 +58,17 @@ public class ItemUtil
         subItem.writeToNBT(nbttagcompound2);
     }
 	
-	public static void removeItemFromStack(ItemStack stack, String compound)
+	public static void removeAllItemFromStack(ItemStack stack, String compound)
 	{
 		if (stack.getTagCompound() != null) stack.getTagCompound().removeTag(compound);
+	}
+	
+	public static void removeItemFromStack(ItemStack stack, String compound)
+	{
+		if (stack.getTagCompound() != null)
+		{
+	        NBTTagCompound nbttagcompound = stack.getTagCompound();
+	        if (nbttagcompound.getCompoundTag("ITEM") != null) nbttagcompound.getCompoundTag("ITEM").removeTag(compound);
+		}
 	}
 }

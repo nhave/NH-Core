@@ -14,6 +14,5 @@ public class Defaults
     public static final int hudOffsetY = 0;
     public static final double hudScale = 1.0D;
     public static final boolean showHudWhileChatting = true;
-    public static final boolean enableHud = true;
     public static final boolean postModeToChat = false;
 }

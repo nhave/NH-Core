@@ -2,6 +2,10 @@ package com.nhave.nhc.shaders;
 
 import com.nhave.nhc.api.items.IItemShader;
 import com.nhave.nhc.api.items.IShadeAble;
+import com.nhave.nhc.chroma.Chroma;
+import com.nhave.nhc.items.ItemChroma;
+import com.nhave.nhc.registry.ModItems;
+import com.nhave.nhc.util.ItemUtil;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -114,5 +118,20 @@ public class ShaderManager
 		
 		if (data instanceof Boolean) return (Boolean) data;
 		else return def;
+	}
+	
+	public static boolean hasChroma(ItemStack stack)
+	{
+		return ItemUtil.getItemFromStack(stack, "CHROMA") != null && ItemUtil.getItemFromStack(stack, "CHROMA").getItem() == ModItems.itemChroma;
+	}
+	
+	public static Chroma getChroma(ItemStack stack)
+	{
+		if (hasChroma(stack))
+		{
+			ItemStack stackChroma = ItemUtil.getItemFromStack(stack, "CHROMA");
+			return ((ItemChroma) ItemUtil.getItemFromStack(stack, "CHROMA").getItem()).getChroma(stackChroma);
+		}
+		return null;
 	}
 }
