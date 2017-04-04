@@ -1,9 +1,17 @@
 package com.nhave.nhc.helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.nhave.nhc.api.items.INHWrench;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class ItemHelper
 {
@@ -55,5 +63,33 @@ public class ItemHelper
 		else if (slot == 4) return player.inventory.armorItemInSlot(2);
 		else if (slot == 5) return player.inventory.armorItemInSlot(3);
 		else return null;
+	}
+	
+	public static void dismantleBlock(World world, BlockPos blockPos,	IBlockState blockState, EntityPlayer player)
+	{
+		Block block = blockState.getBlock();
+    	List drops = block.getDrops(world, blockPos, blockState, 0);
+    	block.onBlockHarvested(world, blockPos, blockState, player);;
+	    world.setBlockToAir(blockPos);
+        
+        if (!world.isRemote)
+        {
+        	ArrayList<? extends ItemStack> items = (ArrayList<? extends ItemStack>) drops;
+        	for (ItemStack stack : items)
+        	{
+        		dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
+            }
+        }
+	}
+
+	public static void dropBlockAsItem(World world, int x, int y, int z, ItemStack stack)
+	{
+		float f = 0.3F;
+    	double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+    	double y2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+    	double z2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+    	EntityItem theItem = new EntityItem(world, x + x2, y + y2, z + z2, stack);
+    	theItem.setDefaultPickupDelay();
+    	world.spawnEntity(theItem);
 	}
 }

@@ -1,5 +1,6 @@
 package com.nhave.nhc.blocks;
 
+import com.nhave.nhc.helpers.ItemHelper;
 import com.nhave.nhc.tiles.TileEntityToolStation;
 
 import net.minecraft.block.Block;
@@ -12,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -20,13 +22,14 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockToolStation extends BlockMachine
+public class BlockToolStation extends BlockBase
 {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	
 	public BlockToolStation(String name)
 	{
-		super(Material.IRON, name, true);
+		super(name, Material.IRON);
+		this.setHardness(50F);
 	}
 	
 	public void onBlockAdded(World world, BlockPos blockPos, IBlockState blockState)
@@ -124,13 +127,37 @@ public class BlockToolStation extends BlockMachine
 	}
 	
 	@Override
-	public boolean doBlockActivate(World world, BlockPos blockPos,	IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing enumFacing, float hitX, float hitY, float hitZ)
+	public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis)
 	{
-		TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(blockPos);
-		if (enumFacing == EnumFacing.UP && tile != null && !player.isSneaking() && world.isAirBlock(blockPos.up(1)))
+		if (axis == EnumFacing.UP) return false;
+		NBTTagCompound nbt = world.getTileEntity(pos).serializeNBT();
+		boolean result = super.rotateBlock(world, pos, axis);
+		if (result) world.getTileEntity(pos).deserializeNBT(nbt);
+		
+		return result;
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (hand == EnumHand.MAIN_HAND)
 		{
-			player.swingArm(hand);
-			return tile.onTileActivated(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), player);
+			TileEntityToolStation tile = (TileEntityToolStation) worldIn.getTileEntity(pos);
+			if (facing == EnumFacing.UP && tile != null && !playerIn.isSneaking() && worldIn.isAirBlock(pos.up(1)))
+			{
+				playerIn.swingArm(hand);
+				return tile.onTileActivated(worldIn, pos.getX(), pos.getY(), pos.getZ(), playerIn);
+			}
+			else if (!playerIn.getHeldItemMainhand().isEmpty() && ItemHelper.isToolWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ()))
+			{
+				if (playerIn.isSneaking())
+				{
+					ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);;
+					playerIn.swingArm(EnumHand.MAIN_HAND);
+					ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
+					return !worldIn.isRemote;
+				}
+			}
 		}
 		return false;
 	}
@@ -143,7 +170,7 @@ public class BlockToolStation extends BlockMachine
     		{
     			TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(blockPos);
     			ItemStack stack = tile.getItemStack();
-    			if (stack != null) dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
+    			if (stack != null) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
     			tile.clearItemStack();
     		}
         }
@@ -158,7 +185,7 @@ public class BlockToolStation extends BlockMachine
     		{
     			TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(blockPos);
     			ItemStack stack = tile.getItemStack();
-    			if (stack != null) dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
+    			if (stack != null) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
     		}
         }
 	}

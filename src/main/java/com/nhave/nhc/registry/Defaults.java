@@ -8,6 +8,8 @@ public class Defaults
     public static final boolean tweakCommandCart = true;
     public static final boolean tweakSnowBalls = true;
     public static final boolean tweakEnderPearls = true;
+    public static final boolean tweakStructureBlocks = true;
+    public static final boolean tweakBarrierBlock = true;
 	
     public static final int hudPosition = HUDPositions.BOTTOM_RIGHT.ordinal();
     public static final int hudOffsetX = 0;

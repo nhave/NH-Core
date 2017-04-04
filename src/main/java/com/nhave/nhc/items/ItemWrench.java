@@ -1,7 +1,7 @@
 package com.nhave.nhc.items;
 
 import com.nhave.nhc.api.items.INHWrench;
-import com.nhave.nhc.blocks.BlockMachine;
+import com.nhave.nhc.blocks.BlockToolStation;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -27,19 +27,25 @@ public class ItemWrench extends ItemBase implements INHWrench
 	    IBlockState bs = blockState;
 	    Block block = bs.getBlock();
 	    
-		if(hand == EnumHand.MAIN_HAND && player.isSneaking() && block instanceof BlockMachine)
+		if(hand == EnumHand.MAIN_HAND && player.isSneaking() && block instanceof BlockToolStation)
 		{
 			if (!world.isRemote)
 			{
 				block.onBlockActivated(world, pos, bs, player, hand, side, hitX, hitY, hitZ);
 				return EnumActionResult.SUCCESS;
 			}
-			else
-			{
-				player.swingArm(EnumHand.MAIN_HAND);
-				return EnumActionResult.PASS;
-			}
+			else player.swingArm(EnumHand.MAIN_HAND);
 	    }
+	    
+	    if (block.rotateBlock(world, pos, side))
+	    {
+	    	if (!world.isRemote)
+			{
+				return EnumActionResult.SUCCESS;
+			}
+			else player.swingArm(EnumHand.MAIN_HAND);
+	    }
+	    
 		return EnumActionResult.PASS;
 	}
 

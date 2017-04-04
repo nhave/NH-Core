@@ -17,6 +17,8 @@ public class ModConfig
 
     public static boolean tweakCommandBlock = Defaults.tweakCommandBlock;
     public static boolean tweakCommandCart = Defaults.tweakCommandCart;
+    public static boolean tweakStructureBlocks = Defaults.tweakStructureBlocks;
+    public static boolean tweakBarrierBlock = Defaults.tweakBarrierBlock;
     public static boolean tweakSnowBalls = Defaults.tweakSnowBalls;
     public static boolean tweakEnderPearls = Defaults.tweakEnderPearls;
     
@@ -59,8 +61,10 @@ public class ModConfig
 	public static void loadCommonConfig()
 	{
 		config.setCategoryComment("common", "Configuration for all Common configs");
-		tweakCommandBlock = config.get("common", "TweakCommandBlock", Defaults.tweakCommandBlock, "Adds the Command Block to the Redstone Creative Tab").getBoolean(Defaults.tweakCommandBlock);
+		tweakCommandBlock = config.get("common", "TweakCommandBlock", Defaults.tweakCommandBlock, "Adds the Command Blocks to the Redstone Creative Tab").getBoolean(Defaults.tweakCommandBlock);
 		tweakCommandCart = config.get("common", "TweakCommandCart", Defaults.tweakCommandCart, "Adds the Command Cart to the Transport Creative Tab").getBoolean(Defaults.tweakCommandCart);
+		tweakStructureBlocks = config.get("common", "TweakStructureBlocks", Defaults.tweakStructureBlocks, "Adds the Structure Blocks to the Redstone Creative Tab").getBoolean(Defaults.tweakStructureBlocks);
+		tweakBarrierBlock = config.get("common", "TweakBarrierBlock", Defaults.tweakBarrierBlock, "Adds the Barrier Block to the Redstone Creative Tab").getBoolean(Defaults.tweakBarrierBlock);
 		
 		tweakSnowBalls = config.get("common", "TweakSnowBalls", Defaults.tweakSnowBalls, "Increases stacksize of Snow Balls 64").getBoolean(Defaults.tweakSnowBalls);
 		tweakEnderPearls = config.get("common", "TweakEnderPearls", Defaults.tweakEnderPearls, "Increases stacksize of Ender Pearls 64").getBoolean(Defaults.tweakEnderPearls);
