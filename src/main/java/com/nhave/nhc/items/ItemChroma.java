@@ -52,7 +52,7 @@ public class ItemChroma extends ItemBase implements IItemColor
 			for(Entry<String, Chroma> entry : ChromaRegistry.CHROMAS.entrySet())
 			{
 				String key = entry.getKey();
-				list.add(ItemNBTHelper.setStackString(new ItemStack(item), "CHROMAS", "CHROMA", key));
+				list.add(ItemNBTHelper.setString(new ItemStack(item), "CHROMAS", "CHROMA", key));
 			}
 		}
 		else list.add(new ItemStack(item));

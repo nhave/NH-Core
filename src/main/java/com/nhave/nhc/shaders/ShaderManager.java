@@ -3,6 +3,7 @@ package com.nhave.nhc.shaders;
 import com.nhave.nhc.api.items.IItemShader;
 import com.nhave.nhc.api.items.IShadeAble;
 import com.nhave.nhc.chroma.Chroma;
+import com.nhave.nhc.chroma.ChromaRegistry;
 import com.nhave.nhc.items.ItemChroma;
 import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.util.ItemUtil;
@@ -132,6 +133,6 @@ public class ShaderManager
 			ItemStack stackChroma = ItemUtil.getItemFromStack(stack, "CHROMA");
 			return ((ItemChroma) ItemUtil.getItemFromStack(stack, "CHROMA").getItem()).getChroma(stackChroma);
 		}
-		return null;
+		return ChromaRegistry.getChroma("white");
 	}
 }

@@ -5,6 +5,7 @@ import com.nhave.nhc.api.items.IItemShader;
 import com.nhave.nhc.api.items.IShadeAble;
 import com.nhave.nhc.events.ToolStationUpdateEvent;
 import com.nhave.nhc.helpers.ItemHelper;
+import com.nhave.nhc.helpers.ItemNBTHelper;
 import com.nhave.nhc.items.ItemChroma;
 import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.shaders.ShaderManager;
@@ -43,12 +44,11 @@ public class ToolStationEventHandler
 		}
 		else if (evt.input.getItem() instanceof IChromaAcceptor && evt.mod.getItem() == ModItems.itemChroma)
 		{
-			if (ShaderManager.hasChroma(evt.input))
-			{
-				ItemStack stackChroma = ItemUtil.getItemFromStack(evt.input, "CHROMA");
-				ItemChroma itemChroma = (ItemChroma) stackChroma.getItem();
-				if (itemChroma.getChroma(stackChroma) == itemChroma.getChroma(evt.mod)) return;
-			}
+			ItemStack stackChroma = ItemUtil.getItemFromStack(evt.input, "CHROMA");
+			if (stackChroma == null) stackChroma = ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "white");
+			ItemChroma itemChroma = (ItemChroma) stackChroma.getItem();
+			if (itemChroma.getChroma(stackChroma) == itemChroma.getChroma(evt.mod)) return;
+			
 			ItemStack stack = evt.input.copy();
 			ItemStack chroma = evt.mod.copy();
 			chroma.setCount(1);

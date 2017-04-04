@@ -16,13 +16,13 @@ public class ModCrafting
 	{
 		for (int i = 0; i < OREDICT.length; ++i)
 		{
-			GameRegistry.addRecipe(new ShapedOreRecipe(ItemNBTHelper.setStackString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", ModItems.COLORNAMES[i]),
+			GameRegistry.addRecipe(new ShapedOreRecipe(ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", ModItems.COLORNAMES[i]),
 				new Object[] {"XYX", "YZY", "XYX",
 				'X', "nuggetIron",
 				'Y', OREDICT[i],
 				'Z', Items.GLOWSTONE_DUST}));
 		}
-		GameRegistry.addRecipe(new ShapedOreRecipe(ItemNBTHelper.setStackString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "rainbow"),
+		GameRegistry.addRecipe(new ShapedOreRecipe(ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "rainbow"),
 			new Object[] {"XYX", "ZCA", "XBX",
 			'X', "nuggetIron",
 			'Y',"dyeRed",

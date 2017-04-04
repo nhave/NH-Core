@@ -23,11 +23,12 @@ public class ItemWrench extends ItemBase implements INHWrench
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
 	{
+		if (hand == EnumHand.OFF_HAND) return EnumActionResult.PASS;
 		final IBlockState blockState = world.getBlockState(pos);
 	    IBlockState bs = blockState;
 	    Block block = bs.getBlock();
 	    
-		if(hand == EnumHand.MAIN_HAND && player.isSneaking() && block instanceof BlockToolStation)
+		if(player.isSneaking() && block instanceof BlockToolStation)
 		{
 			if (!world.isRemote)
 			{

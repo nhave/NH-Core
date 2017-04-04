@@ -8,6 +8,7 @@ import com.nhave.nhc.Reference;
 import com.nhave.nhc.api.items.IChromaAcceptor;
 import com.nhave.nhc.api.items.IHudDisplay;
 import com.nhave.nhc.api.items.IInventoryItem;
+import com.nhave.nhc.helpers.ItemNBTHelper;
 import com.nhave.nhc.helpers.TooltipHelper;
 import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.shaders.ShaderManager;
@@ -76,25 +77,26 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemCo
 	@Override
 	public int getColorFromItemstack(ItemStack stack, int pass)
 	{
-		int color = ShaderManager.hasChroma(stack) ? ShaderManager.getChroma(stack).getColor() : 16777215;
-		return pass == 1 ? color : 16777215;
+		return pass == 1 ? ShaderManager.getChroma(stack).getColor() : 16777215;
 	}
 
 	@Override
 	public int getInventoryX(ItemStack stack)
 	{
-		return (ShaderManager.hasChroma(stack)) ? 1 : 0;
+		return 1;
 	}
 
 	@Override
 	public int getInventoryY(ItemStack stack)
 	{
-		return (ShaderManager.hasChroma(stack)) ? 1 : 0;
+		return 1;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(ItemStack stack, int slot)
 	{
-		return ItemUtil.getItemFromStack(stack, "CHROMA");
+		ItemStack slotItem = ItemUtil.getItemFromStack(stack, "CHROMA");
+		if (slotItem == null) slotItem = ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "white");
+		return slotItem;
 	}
 }

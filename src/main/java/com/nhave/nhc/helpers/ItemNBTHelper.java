@@ -257,8 +257,9 @@ public class ItemNBTHelper
      * @param compound The tag compund to read from
      * @param key The key to read
      * @param number The number to set
+	 * @return 
      */
-  	public static void setInteger(ItemStack stack, String compound, String key, int number)
+  	public static ItemStack setInteger(ItemStack stack, String compound, String key, int number)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -276,6 +277,7 @@ public class ItemNBTHelper
         }
 
         nbttagcompound1.setInteger(key, number);
+        return stack;
     }
 	
 	/**
@@ -284,8 +286,9 @@ public class ItemNBTHelper
      * @param compound The tag compund to read from
      * @param key The key to read
      * @param array The array to set
+	 * @return 
      */
-  	public static void setIntArray(ItemStack stack, String compound, String key, int[] array)
+  	public static ItemStack setIntArray(ItemStack stack, String compound, String key, int[] array)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -303,6 +306,7 @@ public class ItemNBTHelper
         }
 
         nbttagcompound1.setIntArray(key, array);
+        return stack;
     }
 	
 	/**
@@ -312,8 +316,9 @@ public class ItemNBTHelper
      * @param key The key to read
      * @param number The Double to set
 	 * @return 
+	 * @return 
      */
-  	public static void setDouble(ItemStack stack, String compound, String key, double number)
+  	public static ItemStack setDouble(ItemStack stack, String compound, String key, double number)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -331,6 +336,7 @@ public class ItemNBTHelper
         }
 
         nbttagcompound1.setDouble(key, number);
+        return stack;
     }
 	
 	/**
@@ -340,8 +346,9 @@ public class ItemNBTHelper
      * @param key The key to read
      * @param value The value to set
 	 * @return 
+	 * @return 
      */
-  	public static void setBoolean(ItemStack stack, String compound, String key, boolean value)
+  	public static ItemStack setBoolean(ItemStack stack, String compound, String key, boolean value)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -359,6 +366,7 @@ public class ItemNBTHelper
         }
 
         nbttagcompound1.setBoolean(key, value);
+        return stack;
     }
 	
 	/**
@@ -368,8 +376,9 @@ public class ItemNBTHelper
      * @param key The key to read
      * @param string The string to set
 	 * @return 
+	 * @return 
      */
-  	public static void setString(ItemStack stack, String compound, String key, String string)
+  	public static ItemStack setString(ItemStack stack, String compound, String key, String string)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -387,6 +396,7 @@ public class ItemNBTHelper
         }
 
         nbttagcompound1.setString(key, string);
+        return stack;
     }
 	
 	/**
@@ -396,8 +406,9 @@ public class ItemNBTHelper
      * @param key The key to read
      * @param number The float to set
 	 * @return 
+	 * @return 
      */
-  	public static void setFloat(ItemStack stack, String compound, String key, float number)
+  	public static ItemStack setFloat(ItemStack stack, String compound, String key, float number)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -415,6 +426,7 @@ public class ItemNBTHelper
         }
 
         nbttagcompound1.setFloat(key, number);
+        return stack;
     }
 	
 	/**
@@ -424,8 +436,9 @@ public class ItemNBTHelper
      * @param key The key to read
      * @param param The Byte to set
 	 * @return 
+	 * @return 
      */
-  	public static void setByte(ItemStack stack, String compound, String key, byte param)
+  	public static ItemStack setByte(ItemStack stack, String compound, String key, byte param)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -443,149 +456,6 @@ public class ItemNBTHelper
         }
 
         nbttagcompound1.setByte(key, param);
-    }
-	
-	/**
-     * Sets an Integer to an NBT tag
-     * @param stack The Itemstack
-     * @param compound The tag compund to read from
-     * @param key The key to read
-     * @param number The number to set
-     */
-  	public static ItemStack setStackInteger(ItemStack stack, String compound, String key, int number)
-    {
-        NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-        if (nbttagcompound == null)
-        {
-            nbttagcompound = new NBTTagCompound();
-            stack.setTagCompound(nbttagcompound);
-        }
-
-        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag(compound);
-
-        if (!nbttagcompound.hasKey(compound))
-        {
-            nbttagcompound.setTag(compound, nbttagcompound1);
-        }
-
-        nbttagcompound1.setInteger(key, number);
-        return stack;
-    }
-	
-	/**
-     * Sets an Double to an NBT tag
-     * @param stack The Itemstack
-     * @param compound The tag compund to read from
-     * @param key The key to read
-     * @param number The Double to set
-	 * @return 
-     */
-  	public static ItemStack setStackDouble(ItemStack stack, String compound, String key, double number)
-    {
-        NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-        if (nbttagcompound == null)
-        {
-            nbttagcompound = new NBTTagCompound();
-            stack.setTagCompound(nbttagcompound);
-        }
-
-        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag(compound);
-
-        if (!nbttagcompound.hasKey(compound))
-        {
-            nbttagcompound.setTag(compound, nbttagcompound1);
-        }
-
-        nbttagcompound1.setDouble(key, number);
-        return stack;
-    }
-	
-	/**
-     * Sets a Boolean to an NBT tag
-     * @param stack The Itemstack
-     * @param compound The tag compund to read from
-     * @param key The key to read
-     * @param value The value to set
-	 * @return 
-     */
-  	public static ItemStack setStackBoolean(ItemStack stack, String compound, String key, boolean value)
-    {
-        NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-        if (nbttagcompound == null)
-        {
-            nbttagcompound = new NBTTagCompound();
-            stack.setTagCompound(nbttagcompound);
-        }
-
-        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag(compound);
-
-        if (!nbttagcompound.hasKey(compound))
-        {
-            nbttagcompound.setTag(compound, nbttagcompound1);
-        }
-
-        nbttagcompound1.setBoolean(key, value);
-        return stack;
-    }
-	
-	/**
-     * Sets a String to an NBT tag
-     * @param stack The Itemstack
-     * @param compound The tag compund to read from
-     * @param key The key to read
-     * @param string The string to set
-	 * @return 
-     */
-  	public static ItemStack setStackString(ItemStack stack, String compound, String key, String string)
-    {
-        NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-        if (nbttagcompound == null)
-        {
-            nbttagcompound = new NBTTagCompound();
-            stack.setTagCompound(nbttagcompound);
-        }
-
-        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag(compound);
-
-        if (!nbttagcompound.hasKey(compound))
-        {
-            nbttagcompound.setTag(compound, nbttagcompound1);
-        }
-
-        nbttagcompound1.setString(key, string);
-        return stack;
-    }
-	
-	/**
-     * Sets a Float to an NBT tag
-     * @param stack The Itemstack
-     * @param compound The tag compund to read from
-     * @param key The key to read
-     * @param number The float to set
-	 * @return 
-     */
-  	public static ItemStack setStackFloat(ItemStack stack, String compound, String key, float number)
-    {
-        NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-        if (nbttagcompound == null)
-        {
-            nbttagcompound = new NBTTagCompound();
-            stack.setTagCompound(nbttagcompound);
-        }
-
-        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag(compound);
-
-        if (!nbttagcompound.hasKey(compound))
-        {
-            nbttagcompound.setTag(compound, nbttagcompound1);
-        }
-
-        nbttagcompound1.setFloat(key, number);
         return stack;
     }
 }

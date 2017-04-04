@@ -20,6 +20,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockToolStation extends BlockBase
@@ -152,14 +153,28 @@ public class BlockToolStation extends BlockBase
 			{
 				if (playerIn.isSneaking())
 				{
-					ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);;
-					playerIn.swingArm(EnumHand.MAIN_HAND);
+					ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);
 					ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
 					return !worldIn.isRemote;
 				}
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+	{
+		if (!worldIn.isRemote)
+        {
+    		if (worldIn.getTileEntity(pos) != null && !worldIn.isAirBlock(pos.up(1)))
+    		{
+    			TileEntityToolStation tile = (TileEntityToolStation) worldIn.getTileEntity(pos);
+    			ItemStack stack = tile.getItemStack();
+    			if (stack != null) ItemHelper.dropBlockAsItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
+    			tile.clearItemStack();
+    		}
+        }
 	}
 	
 	public void onNeighborBlockChange(World world, BlockPos blockPos, IBlockState blockState, Block block)
