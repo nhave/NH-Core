@@ -177,20 +177,6 @@ public class BlockToolStation extends BlockBase
         }
 	}
 	
-	public void onNeighborBlockChange(World world, BlockPos blockPos, IBlockState blockState, Block block)
-	{
-		if (!world.isRemote)
-        {
-    		if (world.getTileEntity(blockPos) != null && !world.isAirBlock(blockPos.up(1)))
-    		{
-    			TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(blockPos);
-    			ItemStack stack = tile.getItemStack();
-    			if (stack != null) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
-    			tile.clearItemStack();
-    		}
-        }
-	}
-	
 	@Override
 	public void onBlockHarvested(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
 	{
