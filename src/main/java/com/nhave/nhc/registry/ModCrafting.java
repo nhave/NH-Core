@@ -25,10 +25,18 @@ public class ModCrafting
 		GameRegistry.addRecipe(new ShapedOreRecipe(ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "rainbow"),
 			new Object[] {"XYX", "ZCA", "XBX",
 			'X', "nuggetIron",
-			'Y',"dyeRed",
+			'Y', "dyeRed",
 			'Z', "dyeBlue",
 			'A', "dyeGreen",
 			'B', "dyeYellow",
+			'C', Items.ENDER_EYE}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "tracker"),
+			new Object[] {"XYX", "ZCA", "XBX",
+			'X', "nuggetIron",
+			'Y', new ItemStack(Items.SKULL, 1, 0),
+			'Z', new ItemStack(Items.SKULL, 1, 2),
+			'A', new ItemStack(Items.SKULL, 1, 4),
+			'B', new ItemStack(Items.SKULL, 1, 1),
 			'C', Items.ENDER_EYE}));
 		GameRegistry.addRecipe(new ItemStack(ModItems.itemDataGlass),
 			new Object[] {"  X", "YZA", " AA",
@@ -39,5 +47,11 @@ public class ModCrafting
 		GameRegistry.addRecipe(new ItemStack(ModItems.itemWrench),
 			new Object[] {"X X", " X ", "X X",
 			'X', Items.IRON_INGOT});
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockToolStation),
+			new Object[] {"XXX", "YZY", "XAX",
+			'X', Items.IRON_INGOT,
+			'Y', Blocks.PISTON,
+			'Z', Blocks.IRON_BARS,
+			'A', Blocks.REDSTONE_BLOCK});
 	}
 }

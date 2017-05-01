@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nhave.nhc.api.items.IWidgetControl;
+import com.nhave.nhc.registry.ModConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -18,7 +19,7 @@ public class TooltipWidget
 	@SubscribeEvent
 	public void renderTooltip(RenderTooltipEvent.PostText event)
 	{
-		if(event.getStack() != null)
+		if(event.getStack() != null && ModConfig.enableWidgets)
 		{
 			List<WidgetBase> list = WIDGETS;
 			if (event.getStack().getItem() instanceof IWidgetControl)

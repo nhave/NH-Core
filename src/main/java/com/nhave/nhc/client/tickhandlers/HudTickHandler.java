@@ -71,7 +71,7 @@ public class HudTickHandler
         {
 	    	ItemStack hudDisplay = ItemHelper.getCurrentItemOrArmor(mc.player, 5);
 	    	boolean showHud = hudDisplay.getItem() instanceof IHudDisplay && ((IHudDisplay)hudDisplay.getItem()).isHudActive(hudDisplay);
-	        if (evt.phase == Phase.END && showHud)
+	        if (evt.phase == Phase.END && (showHud || ModConfig.forceShowHud))
 	        {
 	            tickEnd();
 	        }

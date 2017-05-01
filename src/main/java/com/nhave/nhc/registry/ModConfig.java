@@ -28,6 +28,8 @@ public class ModConfig
     public static double hudScale = Defaults.hudScale;
     public static boolean showHudWhileChatting = Defaults.showHudWhileChatting;
     public static boolean postModeToChat = Defaults.postModeToChat;
+    public static boolean forceShowHud = Defaults.forceShowHud;
+    public static boolean enableWidgets = Defaults.enableWidgets;
 	
 	public ModConfig(boolean isClient)
 	{
@@ -79,5 +81,7 @@ public class ModConfig
         hudScale = Math.abs(config.get("client", "HUDScale", Defaults.hudScale, "How large the HUD will be rendered. Default is 1.0, can be bigger or smaller").setMinValue(0.001D).getDouble(Defaults.hudScale));
         showHudWhileChatting = config.get("client", "ShowHUDwhilechatting", Defaults.showHudWhileChatting, "When enabled, the HUD will display even when the chat window is opened.").getBoolean(Defaults.showHudWhileChatting);
         postModeToChat = config.get("client", "PostModeToChat", Defaults.postModeToChat, "Set to true if you have too much stuff on your HUD").getBoolean(Defaults.postModeToChat);
+        forceShowHud = config.get("client", "ForceShowHud", Defaults.forceShowHud, "Set to true to always show the HUD").getBoolean(Defaults.forceShowHud);
+        enableWidgets = config.get("client", "EnableWidgets", Defaults.enableWidgets, "Set to true to enable the experimental Widget System").getBoolean(Defaults.enableWidgets);
 	}
 }

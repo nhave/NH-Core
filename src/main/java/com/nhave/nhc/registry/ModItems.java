@@ -5,6 +5,7 @@ import com.nhave.nhc.api.client.ITickingData;
 import com.nhave.nhc.chroma.Chroma;
 import com.nhave.nhc.chroma.ChromaRainbow;
 import com.nhave.nhc.chroma.ChromaRegistry;
+import com.nhave.nhc.chroma.ChromaTracker;
 import com.nhave.nhc.client.tickhandlers.DataTickHandler;
 import com.nhave.nhc.client.widget.TooltipWidget;
 import com.nhave.nhc.client.widget.WidgetInventory;
@@ -35,6 +36,7 @@ public class ModItems
 	
 	public static Chroma[] chromaBasic = new Chroma[16];
 	public static Chroma chromaRainbow;
+	public static Chroma chromaTracker;
 	
 	public static ArmorMaterial materialNoArmor = EnumHelper.addArmorMaterial("NOARMOR", "NOARMOR", 0, new int[] {0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F);
 	
@@ -50,6 +52,8 @@ public class ModItems
 		}
 		chromaRainbow = ChromaRegistry.registerChroma("rainbow", new ChromaRainbow());
 		DataTickHandler.TICKDATA.add((ITickingData) chromaRainbow);
+		chromaTracker = ChromaRegistry.registerChroma("tracker", new ChromaTracker());
+		DataTickHandler.TICKDATA.add((ITickingData) chromaTracker);
 	}
 	
 	public static void register()

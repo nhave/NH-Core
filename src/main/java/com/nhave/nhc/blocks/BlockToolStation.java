@@ -19,8 +19,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockToolStation extends BlockBase
@@ -153,9 +153,33 @@ public class BlockToolStation extends BlockBase
 			{
 				if (playerIn.isSneaking())
 				{
-					ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);
-					ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
-					return !worldIn.isRemote;
+					if (!worldIn.isRemote)
+					{
+						ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);
+						ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
+						return true;
+					}
+					else
+					{
+						SoundEvent soundName = this.blockSoundType.getPlaceSound();
+						playerIn.playSound(soundName, 1.0F, 0.6F);
+						playerIn.swingArm(EnumHand.MAIN_HAND);
+					}
+				}
+				else
+				{
+					if (!worldIn.isRemote)
+					{
+						this.rotateBlock(worldIn, pos, facing);
+						ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
+						return true;
+					}
+					else
+					{
+						SoundEvent soundName = this.blockSoundType.getPlaceSound();
+						playerIn.playSound(soundName, 1.0F, 0.6F);
+						playerIn.swingArm(EnumHand.MAIN_HAND);
+					}
 				}
 			}
 		}

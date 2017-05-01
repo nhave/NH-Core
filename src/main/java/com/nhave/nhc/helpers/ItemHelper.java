@@ -65,11 +65,11 @@ public class ItemHelper
 		else return null;
 	}
 	
-	public static void dismantleBlock(World world, BlockPos blockPos,	IBlockState blockState, EntityPlayer player)
+	public static void dismantleBlock(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
 	{
 		Block block = blockState.getBlock();
     	List drops = block.getDrops(world, blockPos, blockState, 0);
-    	block.onBlockHarvested(world, blockPos, blockState, player);;
+    	block.onBlockHarvested(world, blockPos, blockState, player);
 	    world.setBlockToAir(blockPos);
         
         if (!world.isRemote)

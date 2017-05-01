@@ -14,6 +14,15 @@ tile.nhc.toolstation.name=Tool Station
 //---Tooltip---//
 tooltip.nhc.data_glass=Displays data of compatible;items on the HUD
 tooltip.nhc.error.missingnbt=!!MISSING NBT DATA!!
+tooltip.nhc.details.shift1=Hold
+tooltip.nhc.details.shift2=Shift
+tooltip.nhc.details.shift3=for Details
+tooltip.nhc.details.alt1=Hold
+tooltip.nhc.details.alt2=Alt
+tooltip.nhc.details.alt3=for Mods
+tooltip.nhc.details.ctrl1=Hold
+tooltip.nhc.details.ctrl2=Ctrl
+tooltip.nhc.details.ctrl3=for Advanced Info
 
 //---Colors---//
 color.nhc.black=Black
@@ -33,6 +42,7 @@ color.nhc.magenta=Magenta
 color.nhc.orange=Orange
 color.nhc.white=White
 color.nhc.rainbow=Rainbow
+color.nhc.tracker=Tracker
 
 //---Config---//
 key.nhc.category=NHAVE's Mods

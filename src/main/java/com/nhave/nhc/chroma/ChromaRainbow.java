@@ -13,16 +13,16 @@ public class ChromaRainbow extends Chroma implements ITickingData
 	}
 	
 	@Override
-	public void onTick()
-	{
-		++this.curTick;
-		if (this.curTick < 0 || this.curTick >= colorCodes.length) this.curTick = 0;
-	}
-	
-	@Override
 	public int getColor()
 	{
 		if (this.curTick < 0 || this.curTick >= colorCodes.length) this.curTick = 0;
 		return colorCodes[this.curTick];
+	}
+	
+	@Override
+	public void onTick()
+	{
+		++this.curTick;
+		if (this.curTick < 0 || this.curTick >= colorCodes.length) this.curTick = 0;
 	}
 }

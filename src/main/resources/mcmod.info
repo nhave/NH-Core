@@ -5,11 +5,11 @@
   "description": "Core mod for all my mods.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://minecraft.curseforge.com/projects/nhaves-core/settings/general",
   "updateUrl": "",
   "authorList": ["nhave"],
   "credits": "",
-  "logoFile": "",
+  "logoFile": "assets/nhc/textures/logo.png",
   "screenshots": [],
   "dependencies": []
 }
