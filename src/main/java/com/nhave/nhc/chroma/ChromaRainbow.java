@@ -1,6 +1,7 @@
 package com.nhave.nhc.chroma;
 
 import com.nhave.nhc.api.client.ITickingData;
+import com.nhave.nhc.util.StringUtils;
 
 public class ChromaRainbow extends Chroma implements ITickingData
 {
@@ -17,6 +18,12 @@ public class ChromaRainbow extends Chroma implements ITickingData
 	{
 		if (this.curTick < 0 || this.curTick >= colorCodes.length) this.curTick = 0;
 		return colorCodes[this.curTick];
+	}
+	
+	@Override
+	public String getQualityColor()
+	{
+		return StringUtils.LIGHT_BLUE;
 	}
 	
 	@Override

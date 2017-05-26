@@ -3,6 +3,7 @@ package com.nhave.nhc.chroma;
 import java.util.List;
 
 import com.nhave.nhc.api.client.ITickingData;
+import com.nhave.nhc.util.StringUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -38,6 +39,12 @@ public class ChromaTracker extends Chroma implements ITickingData
 		else if (isHostileNearby(14D)) return 3407616;
 		
 		return 65280;
+	}
+	
+	@Override
+	public String getQualityColor()
+	{
+		return StringUtils.LIGHT_BLUE;
 	}
 	
 	public boolean isHostileNearby(double range)

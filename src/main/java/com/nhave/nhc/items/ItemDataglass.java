@@ -8,11 +8,14 @@ import com.nhave.nhc.Reference;
 import com.nhave.nhc.api.items.IChromaAcceptor;
 import com.nhave.nhc.api.items.IHudDisplay;
 import com.nhave.nhc.api.items.IInventoryItem;
+import com.nhave.nhc.api.items.IItemQuality;
+import com.nhave.nhc.api.items.IToolStationHud;
 import com.nhave.nhc.helpers.ItemNBTHelper;
 import com.nhave.nhc.helpers.TooltipHelper;
 import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.shaders.ShaderManager;
 import com.nhave.nhc.util.ItemUtil;
+import com.nhave.nhc.util.StringUtils;
 
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.Entity;
@@ -21,7 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemColor, IInventoryItem, IChromaAcceptor
+public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemColor, IInventoryItem, IChromaAcceptor, IItemQuality, IToolStationHud
 {
 	private String name;
 	
@@ -35,7 +38,12 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemCo
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
 	{
-		TooltipHelper.addHiddenTooltip(tooltip, "tooltip.nhc." + this.name, ";");
+		if (StringUtils.isShiftKeyDown())
+		{
+			TooltipHelper.addHiddenTooltip(tooltip, "tooltip.nhc." + this.name, ";");
+			tooltip.add(StringUtils.localize("tooltip.nhc.chroma.current") + ": §e§o" + getStackInSlot(stack, 0).getDisplayName() + "§r");
+		}
+		else tooltip.add(StringUtils.shiftForInfo);
 	}
 	
 	@Override
@@ -98,5 +106,17 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemCo
 		ItemStack slotItem = ItemUtil.getItemFromStack(stack, "CHROMA");
 		if (slotItem == null) slotItem = ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "white");
 		return slotItem;
+	}
+
+	@Override
+	public String getQualityColor(ItemStack stack)
+	{
+		return StringUtils.LIGHT_BLUE;
+	}
+
+	@Override
+	public void addToolStationInfo(ItemStack stack, List list)
+	{
+		list.add(StringUtils.localize("tooltip.nhc.toolstation.chroma") + ": " + StringUtils.format(getStackInSlot(stack, 0).getDisplayName(), StringUtils.YELLOW, StringUtils.ITALIC));
 	}
 }

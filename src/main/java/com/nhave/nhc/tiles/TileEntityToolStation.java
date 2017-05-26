@@ -62,7 +62,6 @@ public class TileEntityToolStation extends TileEntity
 	
 	private void sync()
 	{
-		//worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		world.notifyBlockUpdate(this.pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		markDirty();
 	}

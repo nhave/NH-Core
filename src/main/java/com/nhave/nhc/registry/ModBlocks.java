@@ -3,7 +3,9 @@ package com.nhave.nhc.registry;
 import com.nhave.nhc.Reference;
 import com.nhave.nhc.blocks.BlockToolStation;
 import com.nhave.nhc.client.render.RenderTileToolStation;
+import com.nhave.nhc.itemblocks.ItemBlockBase;
 import com.nhave.nhc.tiles.TileEntityToolStation;
+import com.nhave.nhc.util.StringUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -39,7 +41,7 @@ public class ModBlocks
 	
 	public static void registerBlock(Block block)
 	{
-		registerBlock(block, new ItemBlock(block));
+		registerBlock(block, new ItemBlockBase(block, StringUtils.LIGHT_BLUE));
 	}
 	
 	public static void registerBlock(Block block, ItemBlock itemBlock)

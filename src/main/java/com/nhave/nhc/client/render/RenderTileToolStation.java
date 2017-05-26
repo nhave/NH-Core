@@ -8,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,10 +24,8 @@ public class RenderTileToolStation extends TileEntitySpecialRenderer
 		{
 			int meta = tileEntity.getBlockMetadata();
 			ItemStack stack = tileEntity.getItemStack();
-			EntityItem entItem = new EntityItem(tileEntity.getWorld(), x, y, z, stack);
 			
 			GL11.glPushMatrix();
-			entItem.hoverStart = 0.0F;
 			
 			if (stack.getItem() instanceof ItemBlock)
 			{
@@ -60,7 +57,7 @@ public class RenderTileToolStation extends TileEntitySpecialRenderer
 				GL11.glRotatef(90, 1, 0, 0);
 			}
 			
-			this.itemRenderer.renderItem(entItem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
+			this.itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 			GL11.glPopMatrix();
 		}
 	}

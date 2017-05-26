@@ -36,9 +36,9 @@ public class ItemHelper
 	
 	public static void addItemToPlayer(EntityPlayer player, ItemStack stack)
 	{
-		if (!player.inventory.addItemStackToInventory(stack))
+		if (!player.world.isRemote && !player.inventory.addItemStackToInventory(stack))
 		{
-			if (!player.world.isRemote) player.entityDropItem(stack, 1F);
+			player.entityDropItem(stack, 1F);
 		}
 	}
 	

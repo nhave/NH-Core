@@ -23,6 +23,9 @@ tooltip.nhc.details.alt3=for Mods
 tooltip.nhc.details.ctrl1=Hold
 tooltip.nhc.details.ctrl2=Ctrl
 tooltip.nhc.details.ctrl3=for Advanced Info
+tooltip.nhc.chroma.current=Active Chroma
+tooltip.nhc.toolstation.item=Item
+tooltip.nhc.toolstation.chroma=Chroma
 
 //---Colors---//
 color.nhc.black=Black

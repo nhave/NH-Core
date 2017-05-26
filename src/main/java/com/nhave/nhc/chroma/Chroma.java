@@ -13,4 +13,9 @@ public class Chroma
 	{
 		return this.color;
 	}
+	
+	public String getQualityColor()
+	{
+		return "";
+	}
 }

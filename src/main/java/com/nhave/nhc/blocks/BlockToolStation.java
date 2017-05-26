@@ -1,7 +1,12 @@
 package com.nhave.nhc.blocks;
 
+import java.util.List;
+
+import com.nhave.nhc.api.blocks.IHudBlock;
+import com.nhave.nhc.api.items.IToolStationHud;
 import com.nhave.nhc.helpers.ItemHelper;
 import com.nhave.nhc.tiles.TileEntityToolStation;
+import com.nhave.nhc.util.StringUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -23,7 +28,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockToolStation extends BlockBase
+public class BlockToolStation extends BlockBase implements IHudBlock
 {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	
@@ -213,5 +218,21 @@ public class BlockToolStation extends BlockBase
     			if (stack != null) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
     		}
         }
+	}
+
+	@Override
+	public void addHudInfo(World world, BlockPos pos, IBlockState state, List list)
+	{
+		TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(pos);
+		if (tile != null)
+		{
+			list.add(StringUtils.format(getLocalizedName(), StringUtils.YELLOW, StringUtils.ITALIC));
+			ItemStack stack = tile.getItemStack();
+			if (stack != null && !stack.isEmpty())
+			{
+				list.add(StringUtils.localize("tooltip.nhc.toolstation.item") + ": " + StringUtils.format(StringUtils.limitString(stack.getDisplayName(), 20), StringUtils.YELLOW, StringUtils.ITALIC));
+				if (stack.getItem() instanceof IToolStationHud) ((IToolStationHud) stack.getItem()).addToolStationInfo(stack, list);
+			}
+		}
 	}
 }

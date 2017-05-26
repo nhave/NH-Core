@@ -52,4 +52,22 @@ public class StringUtils
 	{
 		return I18n.translateToLocal(key);
 	}
+	
+	public static String limitString(String string, int max)
+	{
+		int maxLength = (string.length() < max) ? string.length() : max;
+		String suffix = (string.length() < max) ? "" : "...";
+		string = string.substring(0, maxLength);
+		return string + suffix;
+	}
+	
+	public static String format(String string, String... format)
+	{
+		String formatString = "";
+		for (int i = 0; i < format.length; ++i)
+		{
+			formatString += format[i];
+		}
+		return formatString + string + END + LIGHT_GRAY;
+	}
 }

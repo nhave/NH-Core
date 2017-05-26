@@ -3,6 +3,7 @@ package com.nhave.nhc.items;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.nhave.nhc.api.items.IItemQuality;
 import com.nhave.nhc.chroma.Chroma;
 import com.nhave.nhc.chroma.ChromaRegistry;
 import com.nhave.nhc.helpers.ItemNBTHelper;
@@ -16,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 
-public class ItemChroma extends ItemBase implements IItemColor
+public class ItemChroma extends ItemBase implements IItemColor, IItemQuality
 {
 	public ItemChroma(String name)
 	{
@@ -63,5 +64,12 @@ public class ItemChroma extends ItemBase implements IItemColor
 	{
 		if (getChroma(stack) != null && pass == 1) return getChroma(stack).getColor();
 		return 16777215;
+	}
+
+	@Override
+	public String getQualityColor(ItemStack stack)
+	{
+		if (getChroma(stack) != null) return getChroma(stack).getQualityColor();
+		return "";
 	}
 }

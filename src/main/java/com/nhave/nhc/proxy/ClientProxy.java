@@ -2,6 +2,7 @@ package com.nhave.nhc.proxy;
 
 import java.io.File;
 
+import com.nhave.nhc.client.eventhandlers.ClientEventHandler;
 import com.nhave.nhc.client.eventhandlers.KeyInputEventHandler;
 import com.nhave.nhc.client.tickhandlers.DataTickHandler;
 import com.nhave.nhc.client.tickhandlers.HudTickHandler;
@@ -45,6 +46,7 @@ public class ClientProxy extends CommonProxy
 	public void registerEventHandlers()
 	{
 		super.registerEventHandlers();
+		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		MinecraftForge.EVENT_BUS.register(new KeyInputEventHandler());
 		MinecraftForge.EVENT_BUS.register(new TooltipWidget());
 	}
