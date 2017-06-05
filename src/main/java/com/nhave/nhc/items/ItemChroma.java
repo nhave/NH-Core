@@ -9,7 +9,6 @@ import com.nhave.nhc.chroma.ChromaRegistry;
 import com.nhave.nhc.helpers.ItemNBTHelper;
 import com.nhave.nhc.util.StringUtils;
 
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 
-public class ItemChroma extends ItemBase implements IItemColor, IItemQuality
+public class ItemChroma extends ItemBase implements IItemQuality
 {
 	public ItemChroma(String name)
 	{
@@ -57,13 +56,6 @@ public class ItemChroma extends ItemBase implements IItemColor, IItemQuality
 			}
 		}
 		else list.add(new ItemStack(item));
-	}
-
-	@Override
-	public int getColorFromItemstack(ItemStack stack, int pass)
-	{
-		if (getChroma(stack) != null && pass == 1) return getChroma(stack).getColor();
-		return 16777215;
 	}
 
 	@Override

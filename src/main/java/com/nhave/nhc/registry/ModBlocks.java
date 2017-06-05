@@ -15,6 +15,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks
 {
@@ -31,7 +33,8 @@ public class ModBlocks
 	{
 		registerBlock(blockToolStation);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void registerRenders()
 	{
 		registerRender(blockToolStation);
@@ -49,7 +52,8 @@ public class ModBlocks
 		GameRegistry.register(block);
 		GameRegistry.register(itemBlock, block.getRegistryName());
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void registerRender(Block block)
 	{
 		Item item = Item.getItemFromBlock(block);

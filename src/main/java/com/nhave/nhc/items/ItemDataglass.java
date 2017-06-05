@@ -10,21 +10,20 @@ import com.nhave.nhc.api.items.IHudDisplay;
 import com.nhave.nhc.api.items.IInventoryItem;
 import com.nhave.nhc.api.items.IItemQuality;
 import com.nhave.nhc.api.items.IToolStationHud;
+import com.nhave.nhc.client.render.ItemColorHandler;
 import com.nhave.nhc.helpers.ItemNBTHelper;
 import com.nhave.nhc.helpers.TooltipHelper;
 import com.nhave.nhc.registry.ModItems;
-import com.nhave.nhc.shaders.ShaderManager;
 import com.nhave.nhc.util.ItemUtil;
 import com.nhave.nhc.util.StringUtils;
 
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemColor, IInventoryItem, IChromaAcceptor, IItemQuality, IToolStationHud
+public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInventoryItem, IChromaAcceptor, IItemQuality, IToolStationHud
 {
 	private String name;
 	
@@ -79,13 +78,7 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IItemCo
 	@Override
 	public int getColor(ItemStack stack)
 	{
-		return getColorFromItemstack(stack, 1);
-	}
-
-	@Override
-	public int getColorFromItemstack(ItemStack stack, int pass)
-	{
-		return pass == 1 ? ShaderManager.getChroma(stack).getColor() : 16777215;
+		return ItemColorHandler.INSTANCE.getColorFromItemstack(stack, 1);
 	}
 
 	@Override

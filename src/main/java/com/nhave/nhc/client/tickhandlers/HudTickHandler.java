@@ -79,14 +79,14 @@ public class HudTickHandler
 	    RayTraceResult rayTrace = mc.objectMouseOver;
 	    if (rayTrace != null)
 	    {
-	    	if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) list.add(StringUtils.format(rayTrace.entityHit.getName(), StringUtils.YELLOW, StringUtils.ITALIC));
+	    	if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) list.add(StringUtils.format(StringUtils.limitString(rayTrace.entityHit.getName(), 20), StringUtils.YELLOW, StringUtils.ITALIC));
 	    	else if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
 	    	{
 	    		IBlockState state = mc.world.getBlockState(rayTrace.getBlockPos());
 	    	    Block block = state.getBlock();
 	    	    
 	    	    if (block instanceof IHudBlock) ((IHudBlock) block).addHudInfo(mc.world, rayTrace.getBlockPos(), state, list);
-	    	    else list.add(StringUtils.format(block.getPickBlock(state, rayTrace, mc.world, rayTrace.getBlockPos(), mc.player).getDisplayName(), StringUtils.YELLOW, StringUtils.ITALIC));
+	    	    else list.add(StringUtils.format(StringUtils.limitString(block.getPickBlock(state, rayTrace, mc.world, rayTrace.getBlockPos(), mc.player).getDisplayName(), 20), StringUtils.YELLOW, StringUtils.ITALIC));
 	    	}
 	    }
     }

@@ -8,10 +8,11 @@ import com.nhave.nhc.util.StringUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ChromaTracker extends Chroma implements ITickingData
 {
-	private static final Minecraft mc = Minecraft.getMinecraft();
 	private static final int RATE = 5;
 	private int tick = 0;
 	private int step = 0;
@@ -25,7 +26,6 @@ public class ChromaTracker extends Chroma implements ITickingData
 	@Override
 	public int getColor()
 	{
-		
 		if (isHostileNearby(3D)) return this.colorCodes[this.step];
 		else if (isHostileNearby(5D)) return 16711680;
 		else if (isHostileNearby(6D)) return 16724736;
@@ -46,9 +46,11 @@ public class ChromaTracker extends Chroma implements ITickingData
 	{
 		return StringUtils.LIGHT_BLUE;
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public boolean isHostileNearby(double range)
 	{
+		Minecraft mc = Minecraft.getMinecraft();
 		List<Entity> entities = mc.world.getEntitiesWithinAABBExcludingEntity(mc.player, mc.player.getEntityBoundingBox().expand(range, range, range));
 		for (int i = 0; i < entities.size(); ++i)
 		{

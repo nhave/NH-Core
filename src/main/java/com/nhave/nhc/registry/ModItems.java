@@ -6,6 +6,7 @@ import com.nhave.nhc.chroma.Chroma;
 import com.nhave.nhc.chroma.ChromaRainbow;
 import com.nhave.nhc.chroma.ChromaRegistry;
 import com.nhave.nhc.chroma.ChromaTracker;
+import com.nhave.nhc.client.render.ItemColorHandler;
 import com.nhave.nhc.client.tickhandlers.DataTickHandler;
 import com.nhave.nhc.client.widget.TooltipWidget;
 import com.nhave.nhc.client.widget.WidgetInventory;
@@ -16,13 +17,14 @@ import com.nhave.nhc.items.ItemWrench;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModItems
 {
@@ -51,9 +53,7 @@ public class ModItems
 			chromaBasic[i] = ChromaRegistry.registerChroma(COLORNAMES[i], new Chroma(COLORCODES[i]));
 		}
 		chromaRainbow = ChromaRegistry.registerChroma("rainbow", new ChromaRainbow());
-		DataTickHandler.TICKDATA.add((ITickingData) chromaRainbow);
 		chromaTracker = ChromaRegistry.registerChroma("tracker", new ChromaTracker());
-		DataTickHandler.TICKDATA.add((ITickingData) chromaTracker);
 	}
 	
 	public static void register()
@@ -63,21 +63,27 @@ public class ModItems
 		GameRegistry.register(itemChroma);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static void registerRenders()
 	{
 		registerRender(itemDataGlass);
 		registerRender(itemWrench);
 		registerRender(itemChroma);
 		
-		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler((IItemColor)itemDataGlass, itemDataGlass);		
-		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler((IItemColor)itemChroma, itemChroma);
+		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemDataGlass);		
+		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemChroma);
+		
+		DataTickHandler.TICKDATA.add((ITickingData) chromaRainbow);
+		DataTickHandler.TICKDATA.add((ITickingData) chromaTracker);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void registerWidgets()
 	{
 		TooltipWidget.register(new WidgetInventory());
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void registerRender(Item item)
 	{
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
