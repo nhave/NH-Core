@@ -19,6 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -84,9 +85,14 @@ public class HudTickHandler
 	    	{
 	    		IBlockState state = mc.world.getBlockState(rayTrace.getBlockPos());
 	    	    Block block = state.getBlock();
+	    	    if (block == null || block == Blocks.AIR) return;
 	    	    
 	    	    if (block instanceof IHudBlock) ((IHudBlock) block).addHudInfo(mc.world, rayTrace.getBlockPos(), state, list);
-	    	    else list.add(StringUtils.format(StringUtils.limitString(block.getPickBlock(state, rayTrace, mc.world, rayTrace.getBlockPos(), mc.player).getDisplayName(), 20), StringUtils.YELLOW, StringUtils.ITALIC));
+	    	    else
+	    	    {
+	    	    	ItemStack item = block.getPickBlock(state, rayTrace, mc.world, rayTrace.getBlockPos(), mc.player);
+	    	    	if (item != null) list.add(StringUtils.format(StringUtils.limitString(item.getDisplayName(), 20), StringUtils.YELLOW, StringUtils.ITALIC));
+	    	    }
 	    	}
 	    }
     }
