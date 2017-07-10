@@ -6,6 +6,7 @@ import com.nhave.nhc.chroma.Chroma;
 import com.nhave.nhc.chroma.ChromaRainbow;
 import com.nhave.nhc.chroma.ChromaRegistry;
 import com.nhave.nhc.chroma.ChromaTracker;
+import com.nhave.nhc.client.mesh.CustomMeshDefinitionDataGlass;
 import com.nhave.nhc.client.render.ItemColorHandler;
 import com.nhave.nhc.client.tickhandlers.DataTickHandler;
 import com.nhave.nhc.client.widget.TooltipWidget;
@@ -15,11 +16,14 @@ import com.nhave.nhc.items.ItemDataglass;
 import com.nhave.nhc.items.ItemWrench;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -66,7 +70,10 @@ public class ModItems
 	@SideOnly(Side.CLIENT)
 	public static void registerRenders()
 	{
-		registerRender(itemDataGlass);
+		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + itemDataGlass.getRegistryName().getResourcePath()));
+		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + "focus"));
+		registerRenderMesh(itemDataGlass, new CustomMeshDefinitionDataGlass());
+		
 		registerRender(itemWrench);
 		registerRender(itemChroma);
 		
@@ -88,5 +95,13 @@ public class ModItems
 	{
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 		renderItem.getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MODID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void registerRenderMesh(Item item, ItemMeshDefinition mesh)
+	{
+		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+		
+		renderItem.getItemModelMesher().register(item, mesh);
 	}
 }

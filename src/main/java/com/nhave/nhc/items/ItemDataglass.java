@@ -73,7 +73,9 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInvent
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot equipmentSlot, String armorTexture)
 	{
-		return Reference.MODID + ":textures/armor/" + stack.getItem().getRegistryName().getResourcePath() + (armorTexture == "overlay" ? "_0" : "_1") + ".png";
+		String name = stack.getDisplayName().toLowerCase().trim();
+		String textureName = (name.equals("focus") ? "focus" : stack.getItem().getRegistryName().getResourcePath());
+		return Reference.MODID + ":textures/armor/" + textureName + (armorTexture != null && armorTexture == "overlay" ? "_0" : "_1") + ".png";
 	}
 	
 	@Override
