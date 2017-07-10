@@ -13,15 +13,20 @@ import com.nhave.nhc.api.items.IToolStationHud;
 import com.nhave.nhc.client.render.ItemColorHandler;
 import com.nhave.nhc.helpers.ItemNBTHelper;
 import com.nhave.nhc.helpers.TooltipHelper;
+import com.nhave.nhc.registry.ModIntegration;
 import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.util.ItemUtil;
 import com.nhave.nhc.util.StringUtils;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 
 public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInventoryItem, IChromaAcceptor, IItemQuality, IToolStationHud
 {
@@ -42,7 +47,21 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInvent
 			TooltipHelper.addHiddenTooltip(tooltip, "tooltip.nhc." + this.name, ";");
 			tooltip.add(StringUtils.localize("tooltip.nhc.chroma.current") + ": §e§o" + getStackInSlot(stack, 0).getDisplayName() + "§r");
 		}
-		else tooltip.add(StringUtils.shiftForInfo);
+		else
+		{
+			if (ModIntegration.quarkLoaded) tooltip.add("");
+			tooltip.add(StringUtils.shiftForInfo);
+		}
+	}
+	
+	@Override
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+	{
+		ItemStack stack = new ItemStack(itemIn);
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInteger("theoneprobe", 1);
+        stack.setTagCompound(tag);
+        subItems.add(stack);
 	}
 	
 	@Override

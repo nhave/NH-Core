@@ -1,6 +1,7 @@
 package com.nhave.nhc.eventhandlers;
 
 import com.nhave.nhc.api.items.IChromaAcceptor;
+import com.nhave.nhc.api.items.IChromaAcceptorAdv;
 import com.nhave.nhc.api.items.IItemShader;
 import com.nhave.nhc.api.items.IShadeAble;
 import com.nhave.nhc.events.ToolStationUpdateEvent;
@@ -44,6 +45,7 @@ public class ToolStationEventHandler
 		}
 		else if (evt.input.getItem() instanceof IChromaAcceptor && evt.mod.getItem() == ModItems.itemChroma)
 		{
+			if (evt.input.getItem() instanceof IChromaAcceptorAdv && !((IChromaAcceptorAdv) evt.input.getItem()).supportsChroma(evt.input)) return;
 			ItemStack stackChroma = ItemUtil.getItemFromStack(evt.input, "CHROMA");
 			if (stackChroma == null) stackChroma = ItemNBTHelper.setString(new ItemStack(ModItems.itemChroma), "CHROMAS", "CHROMA", "white");
 			ItemChroma itemChroma = (ItemChroma) stackChroma.getItem();

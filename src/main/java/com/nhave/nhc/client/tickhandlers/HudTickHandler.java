@@ -52,7 +52,7 @@ public class HudTickHandler
                 }
             }
             
-    	    addBlockOrEntityinView(info);
+    	    if (ModConfig.showBlocksAndEntities) addBlockOrEntityinView(info);
             
             if (ModConfig.hudPosition >= 5) Collections.reverse(info);
             

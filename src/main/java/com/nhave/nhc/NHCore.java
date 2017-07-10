@@ -8,6 +8,7 @@ import com.nhave.nhc.network.PacketHandler;
 import com.nhave.nhc.proxy.CommonProxy;
 import com.nhave.nhc.registry.ModBlocks;
 import com.nhave.nhc.registry.ModCrafting;
+import com.nhave.nhc.registry.ModIntegration;
 import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.registry.ModTweaks;
 
@@ -44,6 +45,8 @@ public class NHCore
     	ModItems.register();
     	ModBlocks.init();
     	ModBlocks.register();
+    	
+    	ModIntegration.preInit();
     }
     
     @EventHandler
@@ -58,6 +61,7 @@ public class NHCore
     	proxy.registerEventHandlers();
     	ModCrafting.init();
     	ModTweaks.postInit();
+    	ModIntegration.postInit();
     }
     
     public static final CreativeTabs CREATIVETAB = new CreativeTabs("nhcore")

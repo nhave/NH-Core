@@ -9,6 +9,7 @@
 ## gradle
 /.gradle
 /build
+/libs
 
 ## ForgeGradle
 /run

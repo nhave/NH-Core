@@ -1,7 +1,7 @@
 [
 {
   "modid": "nhc",
-  "name": "NHAVE's Core Mod",
+  "name": "NHAVE's Core",
   "description": "Core mod for all my mods.",
   "version": "${version}",
   "mcversion": "${mcversion}",
