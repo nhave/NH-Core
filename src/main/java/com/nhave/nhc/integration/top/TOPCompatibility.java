@@ -6,8 +6,11 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.nhave.nhc.Reference;
-import com.nhave.nhc.blocks.BlockToolStation;
+import com.nhave.nhc.api.blocks.IHudBlock;
+import com.nhave.nhc.tiles.TileEntityDisplay;
+import com.nhave.nhc.tiles.TileEntityMachine;
 import com.nhave.nhc.tiles.TileEntityToolStation;
+import com.nhave.nhc.util.StringUtils;
 
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -53,15 +56,22 @@ public class TOPCompatibility
 				public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
 				{
 					TileEntity tile = world.getTileEntity(data.getPos());
-					if (tile instanceof TileEntityToolStation)
+					if (tile instanceof TileEntityMachine)
 					{
-						TileEntityToolStation toolStation = ((TileEntityToolStation) tile);
-						ItemStack stack = toolStation.getItemStack();
-						if (stack != null && !stack.isEmpty())
+						TileEntityMachine machineTile = ((TileEntityMachine) tile);
+						if (machineTile.hasOwner())
 						{
-							
+							probeInfo.text(StringUtils.localize("tooltip.nhc.owner") + ": " + StringUtils.format(machineTile.getOwner(), StringUtils.YELLOW, StringUtils.ITALIC));
+						}
+						
+						ItemStack stack = null;
+						if (tile instanceof TileEntityToolStation) stack = ((TileEntityToolStation) tile).getItemStack();
+						else if (tile instanceof TileEntityDisplay) stack = ((TileEntityDisplay) tile).getItemStack();
+						
+						if (blockState.getBlock() instanceof IHudBlock && stack != null && !stack.isEmpty())
+						{
 							List<String> info = new ArrayList<String>();
-							((BlockToolStation) blockState.getBlock()).addHudInfo(world, data.getPos(), blockState, info);
+							((IHudBlock) blockState.getBlock()).addHudInfo(world, data.getPos(), blockState, info);
 							if (info.size() > 1)
 							{
 								for (int i = 1; i < info.size(); ++i)

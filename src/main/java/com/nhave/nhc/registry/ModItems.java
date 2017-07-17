@@ -7,12 +7,15 @@ import com.nhave.nhc.chroma.ChromaRainbow;
 import com.nhave.nhc.chroma.ChromaRegistry;
 import com.nhave.nhc.chroma.ChromaTracker;
 import com.nhave.nhc.client.mesh.CustomMeshDefinitionDataGlass;
+import com.nhave.nhc.client.mesh.CustomMeshDefinitionToken;
 import com.nhave.nhc.client.render.ItemColorHandler;
 import com.nhave.nhc.client.tickhandlers.DataTickHandler;
 import com.nhave.nhc.client.widget.TooltipWidget;
 import com.nhave.nhc.client.widget.WidgetInventory;
+import com.nhave.nhc.items.ItemBase;
 import com.nhave.nhc.items.ItemChroma;
 import com.nhave.nhc.items.ItemDataglass;
+import com.nhave.nhc.items.ItemToken;
 import com.nhave.nhc.items.ItemWrench;
 
 import net.minecraft.client.Minecraft;
@@ -39,6 +42,9 @@ public class ModItems
 	public static Item itemWrench;
 	public static Item itemShaderRemover;
 	public static Item itemChroma;
+	public static Item itemToken;
+	public static Item itemLock;
+	public static Item itemKey;
 	
 	public static Chroma[] chromaBasic = new Chroma[16];
 	public static Chroma chromaRainbow;
@@ -51,6 +57,11 @@ public class ModItems
 		itemDataGlass = new ItemDataglass("data_glass");
 		itemWrench = new ItemWrench("wrench");
 		itemChroma = new ItemChroma("chroma");
+		itemLock = new ItemBase("lock").setSneakBypassUse().setShiftForDetails();
+		itemKey = new ItemBase("key").setSneakBypassUse().setShiftForDetails().setMaxStackSize(1);
+		
+		itemToken = new ItemToken("token");
+		//ItemToken.ITEMS.add(itemDataGlass);
 		
 		for (int i = 0; i < chromaBasic.length; ++i)
 		{
@@ -65,17 +76,27 @@ public class ModItems
 		GameRegistry.register(itemDataGlass);
 		GameRegistry.register(itemWrench);
 		GameRegistry.register(itemChroma);
+		GameRegistry.register(itemToken);
+		GameRegistry.register(itemLock);
+		GameRegistry.register(itemKey);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerRenders()
 	{
 		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + itemDataGlass.getRegistryName().getResourcePath()));
+		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + itemDataGlass.getRegistryName().getResourcePath() + "_gold"));
 		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + "focus"));
 		registerRenderMesh(itemDataGlass, new CustomMeshDefinitionDataGlass());
 		
+		ModelBakery.registerItemVariants(itemToken, new ResourceLocation(Reference.MODID + ":" + itemToken.getRegistryName().getResourcePath()));
+		ModelBakery.registerItemVariants(itemToken, new ResourceLocation(Reference.MODID + ":" + "token_active"));
+		registerRenderMesh(itemToken, new CustomMeshDefinitionToken());
+		
 		registerRender(itemWrench);
 		registerRender(itemChroma);
+		registerRender(itemLock);
+		registerRender(itemKey);
 		
 		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemDataGlass);		
 		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemChroma);

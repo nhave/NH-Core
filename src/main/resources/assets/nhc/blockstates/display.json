@@ -1,0 +1,8 @@
+{
+    "variants": {
+         "facing=north": { "model": "nhc:display" },
+        "facing=south": { "model": "nhc:display" },
+        "facing=west":  { "model": "nhc:display" },
+        "facing=east":  { "model": "nhc:display" }
+    }
+}

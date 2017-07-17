@@ -1,7 +1,5 @@
 package com.nhave.nhc.tiles;
 
-import com.nhave.nhc.events.ToolStationCraftingEvent;
-import com.nhave.nhc.events.ToolStationUpdateEvent;
 import com.nhave.nhc.helpers.ItemHelper;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,12 +8,24 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 
-public class TileEntityToolStation extends TileEntityMachine
+public class TileEntityDisplay extends TileEntityMachine implements ITickable
 {
 	private ItemStack item = null;
+	private String owner = "";
+	public float itemRotaion = 0;
+
+	@Override
+	public void update()
+	{
+		if (getWorld().isRemote)
+		{
+			this.itemRotaion += 2F;
+			if (this.itemRotaion < 0 || this.itemRotaion >= 360) this.itemRotaion = 0;
+		}
+	}
 
 	@Override
 	public boolean onTileActivated(World world, int x, int y, int z, EntityPlayer player)
@@ -30,30 +40,10 @@ public class TileEntityToolStation extends TileEntityMachine
 		}
 		else if (this.item != null)
 		{
-			ToolStationUpdateEvent evt = new ToolStationUpdateEvent(item, player.getHeldItemMainhand());
-			MinecraftForge.EVENT_BUS.post(evt);
-			if (evt.isCanceled()) return false;
-			if (evt.output != null && player.getHeldItemMainhand().getItem() == evt.mod.getItem() && player.getHeldItemMainhand().getItemDamage() == evt.mod.getItemDamage())
-			{
-				ItemStack mod = player.getHeldItemMainhand().copy();
-				ItemStack input = this.item.copy();
-				if (evt.materialCost > 0)
-				{
-					if (evt.materialCost > player.getHeldItemMainhand().getCount()) return false;
-					else player.getHeldItemMainhand().shrink(evt.materialCost);
-				}
-				this.item = evt.output.copy();
-				sync();
-				MinecraftForge.EVENT_BUS.post(new ToolStationCraftingEvent(player, evt.output.copy(), input, mod));
-				return true;
-			}
-			else
-			{
-				ItemHelper.addItemToPlayer(player, item.copy());
-				this.item = null;
-				sync();
-				return true;
-			}
+			ItemHelper.addItemToPlayer(player, item.copy());
+			this.item = null;
+			sync();
+			return true;
 		}
 		return false;
 	}

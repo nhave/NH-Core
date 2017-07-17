@@ -1,9 +1,12 @@
 package com.nhave.nhc.registry;
 
 import com.nhave.nhc.Reference;
+import com.nhave.nhc.blocks.BlockDisplay;
 import com.nhave.nhc.blocks.BlockToolStation;
+import com.nhave.nhc.client.render.RenderTileDisplay;
 import com.nhave.nhc.client.render.RenderTileToolStation;
 import com.nhave.nhc.itemblocks.ItemBlockBase;
+import com.nhave.nhc.tiles.TileEntityDisplay;
 import com.nhave.nhc.tiles.TileEntityToolStation;
 import com.nhave.nhc.util.StringUtils;
 
@@ -21,25 +24,31 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModBlocks
 {
 	public static Block blockToolStation;
+	public static Block blockDisplay;
 	
 	public static void init()
 	{
 		blockToolStation = new BlockToolStation("toolstation");
-		
+		blockDisplay = new BlockDisplay("display");
+
 		GameRegistry.registerTileEntity(com.nhave.nhc.tiles.TileEntityToolStation.class, "TileToolStation");
+		GameRegistry.registerTileEntity(com.nhave.nhc.tiles.TileEntityDisplay.class, "TileDisplay");
 	}
 	
 	public static void register()
 	{
 		registerBlock(blockToolStation);
+		registerBlock(blockDisplay);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public static void registerRenders()
 	{
 		registerRender(blockToolStation);
-        
+		registerRender(blockDisplay);
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityToolStation.class, new RenderTileToolStation());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisplay.class, new RenderTileDisplay());
 	}
 	
 	public static void registerBlock(Block block)

@@ -3,34 +3,30 @@ package com.nhave.nhc.blocks;
 import java.util.List;
 
 import com.nhave.nhc.api.blocks.IHudBlock;
-import com.nhave.nhc.api.items.IToolStationHud;
 import com.nhave.nhc.helpers.ItemHelper;
 import com.nhave.nhc.helpers.TooltipHelper;
 import com.nhave.nhc.registry.ModItems;
-import com.nhave.nhc.tiles.TileEntityToolStation;
+import com.nhave.nhc.tiles.TileEntityDisplay;
 import com.nhave.nhc.util.StringUtils;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockToolStation extends BlockMachineBase implements IHudBlock
+public class BlockDisplay extends BlockMachineBase implements IHudBlock
 {
-	public BlockToolStation(String name)
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+    
+	public BlockDisplay(String name)
 	{
-		super(name, true);
-	}
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState blockState)
-	{
-		return false;
+		super(name);
 	}
 	
 	@Override
@@ -42,14 +38,7 @@ public class BlockToolStation extends BlockMachineBase implements IHudBlock
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState blockState)
 	{
-		return new TileEntityToolStation();
-	}
-	
-	@Override
-	public boolean doBlockRotation(World world, BlockPos pos, EnumFacing axis)
-	{
-		if (axis == EnumFacing.UP) return false;
-		return super.doBlockRotation(world, pos, axis);
+		return new TileEntityDisplay();
 	}
 	
 	@Override
@@ -57,7 +46,7 @@ public class BlockToolStation extends BlockMachineBase implements IHudBlock
 	{
 		if (hand == EnumHand.MAIN_HAND)
 		{
-			TileEntityToolStation tile = (TileEntityToolStation) worldIn.getTileEntity(pos);
+			TileEntityDisplay tile = (TileEntityDisplay) worldIn.getTileEntity(pos);
 			if (tile.hasOwner() && !tile.getOwner().equals(playerIn.getName())) return false;
 			
 			if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemLock && !tile.hasOwner())
@@ -74,59 +63,13 @@ public class BlockToolStation extends BlockMachineBase implements IHudBlock
 				playerIn.swingArm(EnumHand.MAIN_HAND);
 				return !worldIn.isRemote;
 			}
-			else if (facing == EnumFacing.UP && tile != null && !playerIn.isSneaking() && worldIn.isAirBlock(pos.up(1)))
+			else if (tile != null && !playerIn.isSneaking())
 			{
 				playerIn.swingArm(hand);
 				return tile.onTileActivated(worldIn, pos.getX(), pos.getY(), pos.getZ(), playerIn);
 			}
-			/*else if (!playerIn.getHeldItemMainhand().isEmpty() && ItemHelper.isToolWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ()))
-			{
-				if (playerIn.isSneaking())
-				{
-					if (!worldIn.isRemote)
-					{
-						ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);
-						ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
-						return true;
-					}
-					else
-					{
-						playerIn.playSound(this.blockSoundType.getPlaceSound(), 1.0F, 0.6F);
-						playerIn.swingArm(EnumHand.MAIN_HAND);
-					}
-				}
-				else
-				{
-					if (!worldIn.isRemote)
-					{
-						this.rotateBlock(worldIn, pos, facing);
-						ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
-						return true;
-					}
-					else
-					{
-						playerIn.playSound(this.blockSoundType.getPlaceSound(), 1.0F, 0.6F);
-						playerIn.swingArm(EnumHand.MAIN_HAND);
-					}
-				}
-			}*/
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-	}
-	
-	@Override
-	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
-	{
-		if (!worldIn.isRemote)
-        {
-    		if (worldIn.getTileEntity(pos) != null && !worldIn.isAirBlock(pos.up(1)))
-    		{
-    			TileEntityToolStation tile = (TileEntityToolStation) worldIn.getTileEntity(pos);
-    			ItemStack stack = tile.getItemStack();
-    			if (stack != null) ItemHelper.dropBlockAsItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
-    			tile.clearItemStack();
-    		}
-        }
 	}
 	
 	@Override
@@ -136,7 +79,7 @@ public class BlockToolStation extends BlockMachineBase implements IHudBlock
         {
     		if (world.getTileEntity(blockPos) != null)
     		{
-    			TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(blockPos);
+    			TileEntityDisplay tile = (TileEntityDisplay) world.getTileEntity(blockPos);
     			if (tile.hasOwner()) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(ModItems.itemLock));
     			ItemStack stack = tile.getItemStack();
     			if (stack != null) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
@@ -145,24 +88,41 @@ public class BlockToolStation extends BlockMachineBase implements IHudBlock
 	}
 	
 	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
+		return AABB;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state)
+	{
+		return false;
+	}
+	
+	@Override
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
+	
+	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
 	{
-		if (StringUtils.isShiftKeyDown()) TooltipHelper.addSplitString(tooltip, StringUtils.localize("tooltip.nhc.toolstation"), ";", StringUtils.GRAY);
+		if (StringUtils.isShiftKeyDown()) TooltipHelper.addSplitString(tooltip, StringUtils.localize("tooltip.nhc.display"), ";", StringUtils.GRAY);
 		else tooltip.add(StringUtils.shiftForInfo);
 	}
 	
 	@Override
 	public void addHudInfo(World world, BlockPos pos, IBlockState state, List list)
 	{
-		TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(pos);
+		TileEntityDisplay tile = (TileEntityDisplay) world.getTileEntity(pos);
 		if (tile != null)
 		{
 			list.add(StringUtils.format(getLocalizedName(), StringUtils.YELLOW, StringUtils.ITALIC));
 			ItemStack stack = tile.getItemStack();
 			if (stack != null && !stack.isEmpty())
 			{
-				list.add(StringUtils.localize("tooltip.nhc.toolstation.item") + ": " + StringUtils.format(StringUtils.limitString(stack.getDisplayName(), 20), StringUtils.YELLOW, StringUtils.ITALIC));
-				if (stack.getItem() instanceof IToolStationHud) ((IToolStationHud) stack.getItem()).addToolStationInfo(stack, list);
+				list.add(StringUtils.localize("tooltip.nhc.display.item") + ": " + StringUtils.format(StringUtils.limitString(stack.getDisplayName(), 20), StringUtils.YELLOW, StringUtils.ITALIC));
 			}
 		}
 	}

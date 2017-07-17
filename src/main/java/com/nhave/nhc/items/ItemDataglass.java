@@ -42,9 +42,10 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInvent
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
 	{
+		//tooltip.add("" + ItemUtil.getItemFromStack(stack, "TOKEN"));
 		if (StringUtils.isShiftKeyDown())
 		{
-			TooltipHelper.addHiddenTooltip(tooltip, "tooltip.nhc." + this.name, ";");
+			TooltipHelper.addHiddenTooltip(tooltip, "tooltip.nhc." + this.name, ";", StringUtils.GRAY);
 			tooltip.add(StringUtils.localize("tooltip.nhc.chroma.current") + ": §e§o" + getStackInSlot(stack, 0).getDisplayName() + "§r");
 		}
 		else

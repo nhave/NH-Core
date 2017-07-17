@@ -1,6 +1,7 @@
 package com.nhave.nhc.items;
 
 import com.nhave.nhc.api.items.INHWrench;
+import com.nhave.nhc.blocks.BlockMachineBase;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -32,14 +33,14 @@ public class ItemWrench extends ItemBase implements INHWrench
 	    
 		if (!player.isSneaking() && block.rotateBlock(world, pos, side))
 	    {
+			world.markChunkDirty(pos, null);
 	    	if (!world.isRemote)
 			{
 				return EnumActionResult.SUCCESS;
 			}
 			else
 			{
-				SoundEvent soundName = block.getSoundType(blockState, world, pos, player).getPlaceSound();
-				player.playSound(soundName, 1.0F, 0.6F);
+				player.playSound(block.getSoundType(blockState, world, pos, player).getPlaceSound(), 1.0F, 0.6F);
 				player.swingArm(EnumHand.MAIN_HAND);
 			}
 	    }

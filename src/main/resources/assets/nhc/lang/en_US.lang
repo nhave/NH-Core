@@ -6,13 +6,23 @@ item.nhc.wrench.name=Wrench
 item.nhc.shader_remover.name=Shader Remover
 item.nhc.data_glass.name=Data Glass
 item.nhc.chroma.name=Chroma
+item.nhc.token.name=Mysterious Token
+item.nhc.token_active.name=Token Of Gratitude
+item.nhc.lock.name=Machine Lock
+item.nhc.key.name=Machine Key
 
 //---Blocks---//
 tile.nhc.machine_block.name=Machine Block
 tile.nhc.toolstation.name=Tool Station
+tile.nhc.display.name=Item Display
 
 //---Tooltip---//
 tooltip.nhc.data_glass=Displays data of compatible;items on the HUD
+tooltip.nhc.token=Only given to special;supporters of my mods.
+tooltip.nhc.token.deny=Its just a coin;with no value!
+tooltip.nhc.token.access=The coin is glowing faintly;in your hands.;Futher inspection needed!
+tooltip.nhc.lock=Sneak right click to lock machines;and make them private.
+tooltip.nhc.key=Sneak right click to unlock;your locked machines.
 tooltip.nhc.error.missingnbt=!!MISSING NBT DATA!!
 tooltip.nhc.details.shift1=Hold
 tooltip.nhc.details.shift2=Shift
@@ -24,8 +34,14 @@ tooltip.nhc.details.ctrl1=Hold
 tooltip.nhc.details.ctrl2=Ctrl
 tooltip.nhc.details.ctrl3=for Advanced Info
 tooltip.nhc.chroma.current=Active Chroma
+tooltip.nhc.shader=Item Shader
+tooltip.nhc.shader.appliesto=Can apply to
+tooltip.nhc.toolstation=Place an item on top.;Then right click it with;another item to modify it.
 tooltip.nhc.toolstation.item=Item
 tooltip.nhc.toolstation.chroma=Chroma
+tooltip.nhc.display=Right click to display an item;Right click again to remove it.
+tooltip.nhc.display.item=Item
+tooltip.nhc.owner=Owner
 
 //---Colors---//
 color.nhc.black=Black

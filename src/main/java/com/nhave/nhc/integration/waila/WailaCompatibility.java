@@ -3,9 +3,12 @@ package com.nhave.nhc.integration.waila;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nhave.nhc.api.blocks.IHudBlock;
 import com.nhave.nhc.blocks.BlockBase;
-import com.nhave.nhc.blocks.BlockToolStation;
+import com.nhave.nhc.tiles.TileEntityDisplay;
+import com.nhave.nhc.tiles.TileEntityMachine;
 import com.nhave.nhc.tiles.TileEntityToolStation;
+import com.nhave.nhc.util.StringUtils;
 
 import mcjty.lib.tools.ItemStackTools;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -77,20 +80,28 @@ public class WailaCompatibility implements IWailaDataProvider
         TileEntity tile = accessor.getTileEntity();
         IBlockState blockState = accessor.getBlockState();
         
-		if (tile instanceof TileEntityToolStation)
+		if (tile instanceof TileEntityMachine)
 		{
-			TileEntityToolStation toolStation = ((TileEntityToolStation) tile);
-			ItemStack stack = toolStation.getItemStack();
-			if (stack != null && !stack.isEmpty())
+			TileEntityMachine machineTile = ((TileEntityMachine) tile);
+			if (machineTile.hasOwner())
 			{
-				
+				currenttip.add(StringUtils.localize("tooltip.nhc.owner") + ": " + StringUtils.format(machineTile.getOwner(), StringUtils.YELLOW, StringUtils.ITALIC));
+			}
+			
+			ItemStack stack = null;
+			if (tile instanceof TileEntityToolStation) stack = ((TileEntityToolStation) tile).getItemStack();
+			else if (tile instanceof TileEntityDisplay) stack = ((TileEntityDisplay) tile).getItemStack();
+			
+			if (blockState.getBlock() instanceof IHudBlock && stack != null && !stack.isEmpty())
+			{
 				List<String> info = new ArrayList<String>();
-				((BlockToolStation) blockState.getBlock()).addHudInfo(accessor.getWorld(), accessor.getPosition(), blockState, info);
+				((IHudBlock) blockState.getBlock()).addHudInfo(accessor.getWorld(), accessor.getPosition(), blockState, info);
 				if (info.size() > 1)
 				{
 					for (int i = 1; i < info.size(); ++i)
 					{
-						currenttip.add(info.get(i));
+						if (i == 1) currenttip.add(info.get(i));
+						else currenttip.add(info.get(i));
 					}
 				}
 			}

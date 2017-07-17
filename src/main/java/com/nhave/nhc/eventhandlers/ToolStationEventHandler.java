@@ -2,14 +2,10 @@ package com.nhave.nhc.eventhandlers;
 
 import com.nhave.nhc.api.items.IChromaAcceptor;
 import com.nhave.nhc.api.items.IChromaAcceptorAdv;
-import com.nhave.nhc.api.items.IItemShader;
-import com.nhave.nhc.api.items.IShadeAble;
 import com.nhave.nhc.events.ToolStationUpdateEvent;
-import com.nhave.nhc.helpers.ItemHelper;
 import com.nhave.nhc.helpers.ItemNBTHelper;
 import com.nhave.nhc.items.ItemChroma;
 import com.nhave.nhc.registry.ModItems;
-import com.nhave.nhc.shaders.ShaderManager;
 import com.nhave.nhc.util.ItemUtil;
 
 import net.minecraft.item.ItemStack;
@@ -24,7 +20,7 @@ public class ToolStationEventHandler
 		{
 			return;
 		}
-		else if (evt.input.getItem() instanceof IShadeAble && evt.mod.getItem() instanceof IItemShader)
+		/*else if (evt.input.getItem() instanceof IShadeAble && evt.mod.getItem() instanceof IItemShader)
 		{
 			if (ShaderManager.hasShader(evt.input) && ItemHelper.areItemsEqual(ShaderManager.getShader(evt.input), evt.mod)) return;
 			if (ShaderManager.canApplyShader(evt.input, evt.mod))
@@ -42,7 +38,7 @@ public class ToolStationEventHandler
 			ShaderManager.removeShader(shadeable);
 			evt.materialCost=0;
 			evt.output=shadeable;
-		}
+		}*/
 		else if (evt.input.getItem() instanceof IChromaAcceptor && evt.mod.getItem() == ModItems.itemChroma)
 		{
 			if (evt.input.getItem() instanceof IChromaAcceptorAdv && !((IChromaAcceptorAdv) evt.input.getItem()).supportsChroma(evt.input)) return;
@@ -58,5 +54,25 @@ public class ToolStationEventHandler
 			evt.materialCost=1;
 			evt.output=stack;
 		}
+		/*else if (evt.input.getItem() instanceof ItemDataglass && evt.mod.getItem() instanceof ItemToken)
+		{
+			ItemToken token = (ItemToken) evt.mod.getItem();
+			boolean active = token.isActive(evt.mod);
+			if (active)
+			{
+				ItemStack tokenStack = ItemUtil.getItemFromStack(evt.input, "TOKEN");
+				ItemStack output = evt.input.copy();
+				if (tokenStack != null && !tokenStack.isEmpty())
+				{
+					ItemUtil.removeAllItemFromStack(output, "TOKEN");
+				}
+				else
+				{
+					ItemUtil.addItemToStack(output, evt.mod.copy(), "TOKEN");
+				}
+				evt.materialCost=0;
+				evt.output=output;
+			}
+		}*/
 	}
 }
