@@ -39,9 +39,10 @@ public class ItemToken extends ItemBase implements IItemQuality
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
 	{
-		if (isActive(stack))
+		boolean active = isActive(stack);
+		if (StringUtils.isShiftKeyDown())
 		{
-			if (StringUtils.isShiftKeyDown())
+			if (active)
 			{
 				TooltipHelper.addSplitString(tooltip, StringUtils.localize("tooltip.nhc.token"), ";", StringUtils.GRAY);
 				tooltip.add(StringUtils.localize("tooltip.nhc.shader.appliesto") + ":");
@@ -54,23 +55,23 @@ public class ItemToken extends ItemBase implements IItemQuality
 			}
 			else
 			{
-				tooltip.add(StringUtils.format(StringUtils.localize("tooltip.nhc.shader"), StringUtils.GREEN, StringUtils.ITALIC));
-				tooltip.add(StringUtils.shiftForInfo);
+				String desc = StringUtils.localize("tooltip.nhc.token.deny");
+				String color = StringUtils.RED;
+				for (int i = 0; i < ACCEPTED_USERS.length; ++i)
+				{
+					if (player.getName().toLowerCase().equals(ACCEPTED_USERS[i]))
+					{
+						desc = StringUtils.localize("tooltip.nhc.token.access");
+						color = StringUtils.GREEN;
+					}
+				}
+				TooltipHelper.addSplitString(tooltip, desc, ";", color + StringUtils.ITALIC);
 			}
 		}
 		else
 		{
-			String desc = StringUtils.localize("tooltip.nhc.token.deny");
-			String color = StringUtils.RED;
-			for (int i = 0; i < ACCEPTED_USERS.length; ++i)
-			{
-				if (player.getName().toLowerCase().equals(ACCEPTED_USERS[i]))
-				{
-					desc = StringUtils.localize("tooltip.nhc.token.access");
-					color = StringUtils.GREEN;
-				}
-			}
-			TooltipHelper.addSplitString(tooltip, desc, ";", color + StringUtils.ITALIC);
+			if (active) tooltip.add(StringUtils.format(StringUtils.localize("tooltip.nhc.shader"), StringUtils.GREEN, StringUtils.ITALIC));
+			tooltip.add(StringUtils.shiftForInfo);
 		}
 	}
 	

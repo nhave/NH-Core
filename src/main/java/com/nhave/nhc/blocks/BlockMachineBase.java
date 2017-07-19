@@ -1,6 +1,8 @@
 package com.nhave.nhc.blocks;
 
+import com.nhave.nhc.api.blocks.ILockableTile;
 import com.nhave.nhc.helpers.ItemHelper;
+import com.nhave.nhc.registry.ModItems;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -11,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
@@ -97,14 +100,14 @@ public class BlockMachineBase extends BlockBase
 	    return ((EnumFacing)state.getValue(FACING)).getIndex();
 	}
 	
-	public IBlockState withRotation(IBlockState p_withRotation_1_, Rotation p_withRotation_2_)
+	public IBlockState withRotation(IBlockState state, Rotation rotation)
 	{
-		return p_withRotation_1_.withProperty(FACING, p_withRotation_2_.rotate((EnumFacing)p_withRotation_1_.getValue(FACING)));
+		return state.withProperty(FACING, rotation.rotate((EnumFacing)state.getValue(FACING)));
 	}
 	
-	public IBlockState withMirror(IBlockState p_withMirror_1_, Mirror p_withMirror_2_)
+	public IBlockState withMirror(IBlockState state, Mirror mirror)
 	{
-		return p_withMirror_1_.withRotation(p_withMirror_2_.toRotation((EnumFacing)p_withMirror_1_.getValue(FACING)));
+		return state.withRotation(mirror.toRotation((EnumFacing)state.getValue(FACING)));
 	}
 	
 	protected BlockStateContainer createBlockState()
@@ -113,11 +116,21 @@ public class BlockMachineBase extends BlockBase
 	}
 	
 	@Override
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest)
+	{
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile instanceof ILockableTile)
+		{
+			ILockableTile lockable = (ILockableTile) world.getTileEntity(pos);
+			if (lockable.hasOwner() && !lockable.getOwner().equals(player.getName())) return false;
+		}
+		return super.removedByPlayer(state, world, pos, player, willHarvest);
+	}
+	
+	@Override
 	public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis)
 	{
 		return false;
-		//if (!this.rotation) return false;
-		//return super.rotateBlock(world, pos, axis);
 	}
 	
 	public boolean doBlockRotation(World world, BlockPos pos, EnumFacing axis)
@@ -140,9 +153,35 @@ public class BlockMachineBase extends BlockBase
         return false;
     }
 	
+	public boolean doBlockActivate(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		return false;
+	}
+	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
+		TileEntity tile = worldIn.getTileEntity(pos);
+		if (tile instanceof ILockableTile)
+		{
+			ILockableTile lockable = (ILockableTile) worldIn.getTileEntity(pos);
+			if (lockable.hasOwner() && !lockable.getOwner().equals(playerIn.getName())) return false;
+			
+			if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemLock && !lockable.hasOwner())
+			{
+				lockable.setOwner(playerIn.getName());
+				playerIn.getHeldItem(hand).shrink(1);
+				playerIn.swingArm(EnumHand.MAIN_HAND);
+				return !worldIn.isRemote;
+			}
+			else if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemKey && lockable.hasOwner())
+			{
+				lockable.setOwner(null);
+				ItemHelper.addItemToPlayer(playerIn, new ItemStack(ModItems.itemLock));
+				playerIn.swingArm(EnumHand.MAIN_HAND);
+				return !worldIn.isRemote;
+			}
+		}
 		if (hand == EnumHand.MAIN_HAND)
 		{
 			if (!playerIn.getHeldItemMainhand().isEmpty() && ItemHelper.isToolWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ()))
@@ -176,6 +215,6 @@ public class BlockMachineBase extends BlockBase
 				}
 			}
 		}
-		return false;
+		return doBlockActivate(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 }

@@ -1,5 +1,7 @@
 package com.nhave.nhc.tiles;
 
+import com.nhave.nhc.api.blocks.ILockableTile;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityMachine extends TileEntity
+public class TileEntityMachine extends TileEntity implements ILockableTile
 {
 	private String owner = "";
 	
@@ -24,17 +26,20 @@ public class TileEntityMachine extends TileEntity
 	{
 		return false;
 	}
-	
+
+	@Override
 	public boolean hasOwner()
 	{
 		return (this.owner != null && this.owner.length() > 0);
 	}
-	
+
+	@Override
 	public String getOwner()
 	{
 		return this.owner;
 	}
-	
+
+	@Override
 	public void setOwner(String owner)
 	{
 		if (owner == null) owner = "";

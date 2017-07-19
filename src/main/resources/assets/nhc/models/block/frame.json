@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "nhc:blocks/machine_block"
+        "all": "nhc:blocks/frame"
     }
 }

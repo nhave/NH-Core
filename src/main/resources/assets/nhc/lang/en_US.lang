@@ -10,9 +10,10 @@ item.nhc.token.name=Mysterious Token
 item.nhc.token_active.name=Token Of Gratitude
 item.nhc.lock.name=Machine Lock
 item.nhc.key.name=Machine Key
+item.nhc.energypearl.name=Energized Ender Pearl
 
 //---Blocks---//
-tile.nhc.machine_block.name=Machine Block
+tile.nhc.frame.name=Machine Frame
 tile.nhc.toolstation.name=Tool Station
 tile.nhc.display.name=Item Display
 
@@ -23,6 +24,7 @@ tooltip.nhc.token.deny=Its just a coin;with no value!
 tooltip.nhc.token.access=The coin is glowing faintly;in your hands.;Futher inspection needed!
 tooltip.nhc.lock=Sneak right click to lock machines;and make them private.
 tooltip.nhc.key=Sneak right click to unlock;your locked machines.
+tooltip.nhc.energypearl=This pearl constantly generates;a tiny amount of energy.;Enough to power simple devices.
 tooltip.nhc.error.missingnbt=!!MISSING NBT DATA!!
 tooltip.nhc.details.shift1=Hold
 tooltip.nhc.details.shift2=Shift

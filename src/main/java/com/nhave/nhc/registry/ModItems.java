@@ -45,6 +45,7 @@ public class ModItems
 	public static Item itemToken;
 	public static Item itemLock;
 	public static Item itemKey;
+	public static Item itemEnergyPearl;
 	
 	public static Chroma[] chromaBasic = new Chroma[16];
 	public static Chroma chromaRainbow;
@@ -57,10 +58,11 @@ public class ModItems
 		itemDataGlass = new ItemDataglass("data_glass");
 		itemWrench = new ItemWrench("wrench");
 		itemChroma = new ItemChroma("chroma");
+		itemToken = new ItemToken("token");
 		itemLock = new ItemBase("lock").setSneakBypassUse().setShiftForDetails();
 		itemKey = new ItemBase("key").setSneakBypassUse().setShiftForDetails().setMaxStackSize(1);
+		itemEnergyPearl = new ItemBase("energypearl").setShiftForDetails();
 		
-		itemToken = new ItemToken("token");
 		//ItemToken.ITEMS.add(itemDataGlass);
 		
 		for (int i = 0; i < chromaBasic.length; ++i)
@@ -79,6 +81,7 @@ public class ModItems
 		GameRegistry.register(itemToken);
 		GameRegistry.register(itemLock);
 		GameRegistry.register(itemKey);
+		GameRegistry.register(itemEnergyPearl);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -97,6 +100,7 @@ public class ModItems
 		registerRender(itemChroma);
 		registerRender(itemLock);
 		registerRender(itemKey);
+		registerRender(itemEnergyPearl);
 		
 		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemDataGlass);		
 		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemChroma);

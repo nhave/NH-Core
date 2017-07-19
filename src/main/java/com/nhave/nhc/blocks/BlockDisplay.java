@@ -42,12 +42,12 @@ public class BlockDisplay extends BlockMachineBase implements IHudBlock
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean doBlockActivate(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		if (hand == EnumHand.MAIN_HAND)
 		{
 			TileEntityDisplay tile = (TileEntityDisplay) worldIn.getTileEntity(pos);
-			if (tile.hasOwner() && !tile.getOwner().equals(playerIn.getName())) return false;
+			/*if (tile.hasOwner() && !tile.getOwner().equals(playerIn.getName())) return false;
 			
 			if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemLock && !tile.hasOwner())
 			{
@@ -63,13 +63,13 @@ public class BlockDisplay extends BlockMachineBase implements IHudBlock
 				playerIn.swingArm(EnumHand.MAIN_HAND);
 				return !worldIn.isRemote;
 			}
-			else if (tile != null && !playerIn.isSneaking())
+			else */if (tile != null && !playerIn.isSneaking())
 			{
 				playerIn.swingArm(hand);
 				return tile.onTileActivated(worldIn, pos.getX(), pos.getY(), pos.getZ(), playerIn);
 			}
 		}
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		return super.doBlockActivate(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 	
 	@Override

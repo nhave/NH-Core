@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModCrafting
 {
@@ -34,7 +35,7 @@ public class ModCrafting
 					'Z', "dyeBlue",
 					'A', "dyeGreen",
 					'B', "dyeYellow",
-					'C', Items.ENDER_EYE}));
+					'C', ModItems.itemEnergyPearl}));
 			}
 			if (ModConfig.craftChromaTracker)
 			{
@@ -45,7 +46,7 @@ public class ModCrafting
 					'Z', new ItemStack(Items.SKULL, 1, 2),
 					'A', new ItemStack(Items.SKULL, 1, 4),
 					'B', new ItemStack(Items.SKULL, 1, 1),
-					'C', Items.ENDER_EYE}));
+					'C', ModItems.itemEnergyPearl}));
 			}
 		}
 		
@@ -55,19 +56,47 @@ public class ModCrafting
         dataGlass.setTagCompound(tag);
 		GameRegistry.addRecipe(dataGlass,
 			new Object[] {"  X", "YZA", " AA",
-			'X', Items.ENDER_PEARL,
+			'X', ModItems.itemEnergyPearl,
 			'Y', Blocks.GLASS_PANE,
 			'Z', Items.COMPARATOR,
 			'A', Items.IRON_INGOT});
 		
-		GameRegistry.addRecipe(new ItemStack(ModItems.itemWrench),
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.itemWrench,
 			new Object[] {"X X", " X ", "X X",
-			'X', Items.IRON_INGOT});
+			'X', Items.IRON_INGOT}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.itemKey,
+			new Object[] {"YYX", "YY ",
+			'X', Items.GOLD_INGOT,
+			'Y', Items.GOLD_NUGGET}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.itemLock,
+			new Object[] {"XXX", "X X", "YYY",
+			'X', "nuggetIron",
+			'Y', Items.GOLD_INGOT}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.itemToken,
+			new Object[] {"XYX", "YZY", "XYX",
+			'X', "nuggetIron",
+			'Y', Items.IRON_INGOT,
+			'Z', ModItems.itemEnergyPearl}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.itemEnergyPearl, new Object[] {Items.REDSTONE, Items.REDSTONE, Items.ENDER_PEARL, Items.GLOWSTONE_DUST}));
+		
+		//Blocks
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.blockMachineFrame,
+			new Object[] {"XYX", "YZY", "XYX",
+			'X', Items.IRON_INGOT,
+			'Y', Blocks.IRON_BARS,
+			'Z', Items.REDSTONE}));
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockToolStation),
-			new Object[] {"XXX", "YZY", "XAX",
+			new Object[] {"XBX", "YZY", "XAX",
 			'X', Items.IRON_INGOT,
 			'Y', Blocks.PISTON,
-			'Z', Blocks.IRON_BARS,
-			'A', Blocks.REDSTONE_BLOCK});
+			'Z', Items.COMPARATOR,
+			'A', ModBlocks.blockMachineFrame,
+			'B', Blocks.GLASS_PANE});
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockDisplay),
+			new Object[] {"XYX", "ZAZ",
+			'X', Items.GLOWSTONE_DUST,
+			'Y', ModItems.itemEnergyPearl,
+			'Z', Items.IRON_INGOT,
+			'A', ModBlocks.blockMachineFrame});
 	}
 }

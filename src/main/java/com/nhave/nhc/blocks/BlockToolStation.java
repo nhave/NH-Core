@@ -53,65 +53,18 @@ public class BlockToolStation extends BlockMachineBase implements IHudBlock
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean doBlockActivate(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		if (hand == EnumHand.MAIN_HAND)
 		{
 			TileEntityToolStation tile = (TileEntityToolStation) worldIn.getTileEntity(pos);
-			if (tile.hasOwner() && !tile.getOwner().equals(playerIn.getName())) return false;
-			
-			if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemLock && !tile.hasOwner())
-			{
-				tile.setOwner(playerIn.getName());
-				playerIn.getHeldItem(hand).shrink(1);
-				playerIn.swingArm(EnumHand.MAIN_HAND);
-				return !worldIn.isRemote;
-			}
-			else if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemKey && tile.hasOwner())
-			{
-				tile.setOwner(null);
-				ItemHelper.addItemToPlayer(playerIn, new ItemStack(ModItems.itemLock));
-				playerIn.swingArm(EnumHand.MAIN_HAND);
-				return !worldIn.isRemote;
-			}
-			else if (facing == EnumFacing.UP && tile != null && !playerIn.isSneaking() && worldIn.isAirBlock(pos.up(1)))
+			if (facing == EnumFacing.UP && tile != null && !playerIn.isSneaking())
 			{
 				playerIn.swingArm(hand);
 				return tile.onTileActivated(worldIn, pos.getX(), pos.getY(), pos.getZ(), playerIn);
 			}
-			/*else if (!playerIn.getHeldItemMainhand().isEmpty() && ItemHelper.isToolWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ()))
-			{
-				if (playerIn.isSneaking())
-				{
-					if (!worldIn.isRemote)
-					{
-						ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);
-						ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
-						return true;
-					}
-					else
-					{
-						playerIn.playSound(this.blockSoundType.getPlaceSound(), 1.0F, 0.6F);
-						playerIn.swingArm(EnumHand.MAIN_HAND);
-					}
-				}
-				else
-				{
-					if (!worldIn.isRemote)
-					{
-						this.rotateBlock(worldIn, pos, facing);
-						ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
-						return true;
-					}
-					else
-					{
-						playerIn.playSound(this.blockSoundType.getPlaceSound(), 1.0F, 0.6F);
-						playerIn.swingArm(EnumHand.MAIN_HAND);
-					}
-				}
-			}*/
 		}
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		return super.doBlockActivate(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 	
 	@Override
