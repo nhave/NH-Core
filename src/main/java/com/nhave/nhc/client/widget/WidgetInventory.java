@@ -74,7 +74,7 @@ public class WidgetInventory extends WidgetBase
 					int amount = item instanceof IInventoryItemAdvanced ? ((IInventoryItemAdvanced)item).getCountInSlot(stack, slot) : invItem.getCount();
 					String text = amount > 999 ? PrefixUtil.getDisplayShort(amount) : String.valueOf(amount);
 
-					render.renderItemOverlayIntoGUI(mc.fontRendererObj, invItem, (int) ((x + (18 * coordX) + 6) * 1D), (int) ((y + (18 * coordY) + 6) * 1D), "");
+					render.renderItemOverlayIntoGUI(mc.fontRenderer, invItem, (int) ((x + (18 * coordX) + 6) * 1D), (int) ((y + (18 * coordY) + 6) * 1D), "");
 					boolean advanced = item instanceof IInventoryItemAdvanced && ((IInventoryItemAdvanced)item).renderStackOverlay(stack, slot);
 					if (amount > 1 || advanced)
 					{
@@ -85,9 +85,9 @@ public class WidgetInventory extends WidgetBase
 						if (text.length() > 2)
 						{
 							GlStateManager.scale(0.8f, 0.8f, 1);
-							mc.fontRendererObj.drawStringWithShadow(text, ((x + (18 * coordX)) * 1.25F) + 29 - mc.fontRendererObj.getStringWidth(text), ((y + (18 * coordY)) * 1.25F) + 21, 16777215);
+							mc.fontRenderer.drawStringWithShadow(text, ((x + (18 * coordX)) * 1.25F) + 29 - mc.fontRenderer.getStringWidth(text), ((y + (18 * coordY)) * 1.25F) + 21, 16777215);
 						}
-						else mc.fontRendererObj.drawStringWithShadow(text, ((x + (18 * coordX))) + 23 - mc.fontRendererObj.getStringWidth(text), ((y + (18 * coordY))) + 15, 16777215);
+						else mc.fontRenderer.drawStringWithShadow(text, ((x + (18 * coordX))) + 23 - mc.fontRenderer.getStringWidth(text), ((y + (18 * coordY))) + 15, 16777215);
 						GlStateManager.enableDepth();
 				        GlStateManager.enableLighting();
 				        GlStateManager.disableBlend();

@@ -62,6 +62,7 @@ public class TOPCompatibility
 						if (machineTile.hasOwner())
 						{
 							probeInfo.text(StringUtils.localize("tooltip.nhc.owner") + ": " + StringUtils.format(machineTile.getOwner(), StringUtils.YELLOW, StringUtils.ITALIC));
+							if (machineTile.isPublic()) probeInfo.text(StringUtils.localize("tooltip.nhc.publicmachine"));
 						}
 						
 						ItemStack stack = null;

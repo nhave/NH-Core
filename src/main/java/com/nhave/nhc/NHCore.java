@@ -7,13 +7,13 @@ import org.apache.logging.log4j.Logger;
 import com.nhave.nhc.network.PacketHandler;
 import com.nhave.nhc.proxy.CommonProxy;
 import com.nhave.nhc.registry.ModBlocks;
-import com.nhave.nhc.registry.ModCrafting;
 import com.nhave.nhc.registry.ModIntegration;
-import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.registry.ModTweaks;
+import com.nhave.nhc.registry.RegistryHandler;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -21,7 +21,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.MCVERSIONS, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUIFACTORY)
+//@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.MCVERSIONS, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUIFACTORY)
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, guiFactory = Reference.GUIFACTORY)
 public class NHCore
 {
     public static Logger logger;
@@ -41,12 +42,16 @@ public class NHCore
 		PacketHandler.init();
 		proxy.registerKeybindings();
 		
-    	ModItems.init();
+    	/*ModItems.init();
     	ModItems.register();
     	ModBlocks.init();
-    	ModBlocks.register();
+    	ModBlocks.register();*/
+		
+		MinecraftForge.EVENT_BUS.register(new RegistryHandler());
     	
     	ModIntegration.preInit();
+    	
+    	proxy.preInit(event);
     }
     
     @EventHandler
@@ -59,7 +64,7 @@ public class NHCore
     public void postInit(FMLPostInitializationEvent event)
     {
     	proxy.registerEventHandlers();
-    	ModCrafting.init();
+    	//ModCrafting.init();
     	ModTweaks.postInit();
     	ModIntegration.postInit();
     }

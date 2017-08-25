@@ -16,7 +16,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,11 +39,22 @@ public class ModBlocks
 		GameRegistry.registerTileEntity(com.nhave.nhc.tiles.TileEntityDisplay.class, "TileDisplay");
 	}
 	
-	public static void register()
+	public static void register(Register<Block> event)
 	{
-		registerBlock(blockMachineFrame);
+		event.getRegistry().register(blockMachineFrame);
+		event.getRegistry().register(blockToolStation);
+		event.getRegistry().register(blockDisplay);
+		
+		/*registerBlock(blockMachineFrame);
 		registerBlock(blockToolStation);
-		registerBlock(blockDisplay);
+		registerBlock(blockDisplay);*/
+	}
+	
+	public static void registerItemBlocks(Register<Item> event)
+	{
+		registerItemBlock(event, blockMachineFrame);
+		registerItemBlock(event, blockToolStation);
+		registerItemBlock(event, blockDisplay);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -51,21 +63,31 @@ public class ModBlocks
 		registerRender(blockMachineFrame);
 		registerRender(blockToolStation);
 		registerRender(blockDisplay);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void registerRenderData()
+	{
 		
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityToolStation.class, new RenderTileToolStation());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisplay.class, new RenderTileDisplay());
 	}
 	
-	public static void registerBlock(Block block)
+	public static void registerItemBlock(Register<Item> event, Block block)
 	{
-		registerBlock(block, new ItemBlockBase(block, StringUtils.LIGHT_BLUE));
+		event.getRegistry().register(new ItemBlockBase(block, StringUtils.LIGHT_BLUE).setRegistryName(block.getRegistryName()));
 	}
 	
-	public static void registerBlock(Block block, ItemBlock itemBlock)
+	/*public static void registerBlock(Register<Block> event, Block block)
 	{
-		GameRegistry.register(block);
-		GameRegistry.register(itemBlock, block.getRegistryName());
+		//registerBlock(event, block, new ItemBlockBase(block, StringUtils.LIGHT_BLUE));
 	}
+	
+	public static void registerBlock(Register<Block> event, Block block, ItemBlock itemBlock)
+	{
+		//event.getRegistry().register(block);
+		//event.getRegistry().register(itemBlock, block.getRegistryName());
+	}*/
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerRender(Block block)
@@ -73,6 +95,7 @@ public class ModBlocks
 		Item item = Item.getItemFromBlock(block);
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 		
-		renderItem.getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MODID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
+		//renderItem.getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MODID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Reference.MODID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
 	}
 }

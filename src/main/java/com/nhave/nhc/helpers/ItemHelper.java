@@ -1,8 +1,5 @@
 package com.nhave.nhc.helpers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.nhave.nhc.api.items.INHWrench;
 
 import net.minecraft.block.Block;
@@ -10,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -68,18 +66,21 @@ public class ItemHelper
 	public static void dismantleBlock(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
 	{
 		Block block = blockState.getBlock();
-    	List drops = block.getDrops(world, blockPos, blockState, 0);
+		TileEntity tile = world.getTileEntity(blockPos);
+    	//List drops = block.getDrops(world, blockPos, blockState, 0);
+		
+		block.harvestBlock(world, player, blockPos, blockState, tile, player.getHeldItemMainhand());
     	block.onBlockHarvested(world, blockPos, blockState, player);
 	    world.setBlockToAir(blockPos);
         
-        if (!world.isRemote)
+        /*if (!world.isRemote)
         {
         	ArrayList<? extends ItemStack> items = (ArrayList<? extends ItemStack>) drops;
         	for (ItemStack stack : items)
         	{
         		dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
             }
-        }
+        }*/
 	}
 
 	public static void dropBlockAsItem(World world, int x, int y, int z, ItemStack stack)

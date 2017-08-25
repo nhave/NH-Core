@@ -17,7 +17,14 @@ public class RenderTileToolStation extends TileEntitySpecialRenderer
 	private final RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
 	
 	@Override
-	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float arg4, int paramInt)
+	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+	{
+		super.render(te, x, y, z, partialTicks, destroyStage, alpha);
+		
+		renderTileEntityAt(te, x, y, z);
+	}
+	
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z)
 	{
 		TileEntityToolStation tileEntity = (TileEntityToolStation) tile;
 		if (tileEntity.getItemStack() != null)

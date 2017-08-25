@@ -5,11 +5,11 @@ import java.util.List;
 import com.nhave.nhc.api.blocks.IHudBlock;
 import com.nhave.nhc.helpers.ItemHelper;
 import com.nhave.nhc.helpers.TooltipHelper;
-import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.tiles.TileEntityDisplay;
 import com.nhave.nhc.util.StringUtils;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -47,23 +47,7 @@ public class BlockDisplay extends BlockMachineBase implements IHudBlock
 		if (hand == EnumHand.MAIN_HAND)
 		{
 			TileEntityDisplay tile = (TileEntityDisplay) worldIn.getTileEntity(pos);
-			/*if (tile.hasOwner() && !tile.getOwner().equals(playerIn.getName())) return false;
-			
-			if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemLock && !tile.hasOwner())
-			{
-				tile.setOwner(playerIn.getName());
-				playerIn.getHeldItem(hand).shrink(1);
-				playerIn.swingArm(EnumHand.MAIN_HAND);
-				return !worldIn.isRemote;
-			}
-			else if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemKey && tile.hasOwner())
-			{
-				tile.setOwner(null);
-				ItemHelper.addItemToPlayer(playerIn, new ItemStack(ModItems.itemLock));
-				playerIn.swingArm(EnumHand.MAIN_HAND);
-				return !worldIn.isRemote;
-			}
-			else */if (tile != null && !playerIn.isSneaking())
+			if (tile != null && !playerIn.isSneaking())
 			{
 				playerIn.swingArm(hand);
 				return tile.onTileActivated(worldIn, pos.getX(), pos.getY(), pos.getZ(), playerIn);
@@ -80,11 +64,11 @@ public class BlockDisplay extends BlockMachineBase implements IHudBlock
     		if (world.getTileEntity(blockPos) != null)
     		{
     			TileEntityDisplay tile = (TileEntityDisplay) world.getTileEntity(blockPos);
-    			if (tile.hasOwner()) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(ModItems.itemLock));
     			ItemStack stack = tile.getItemStack();
     			if (stack != null) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
     		}
         }
+		super.onBlockHarvested(world, blockPos, blockState, player);
 	}
 	
 	@Override
@@ -106,7 +90,7 @@ public class BlockDisplay extends BlockMachineBase implements IHudBlock
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
 	{
 		if (StringUtils.isShiftKeyDown()) TooltipHelper.addSplitString(tooltip, StringUtils.localize("tooltip.nhc.display"), ";", StringUtils.GRAY);
 		else tooltip.add(StringUtils.shiftForInfo);

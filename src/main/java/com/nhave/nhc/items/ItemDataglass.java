@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.nhave.nhc.NHCore;
 import com.nhave.nhc.Reference;
 import com.nhave.nhc.api.items.IChromaAcceptor;
 import com.nhave.nhc.api.items.IHudDisplay;
@@ -18,15 +19,15 @@ import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.util.ItemUtil;
 import com.nhave.nhc.util.StringUtils;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 
 public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInventoryItem, IChromaAcceptor, IItemQuality, IToolStationHud
 {
@@ -40,9 +41,8 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInvent
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		//tooltip.add("" + ItemUtil.getItemFromStack(stack, "TOKEN"));
 		if (StringUtils.isShiftKeyDown())
 		{
 			TooltipHelper.addHiddenTooltip(tooltip, "tooltip.nhc." + this.name, ";", StringUtils.GRAY);
@@ -56,13 +56,14 @@ public class ItemDataglass extends ItemArmorBase implements IHudDisplay, IInvent
 	}
 	
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
 	{
-		ItemStack stack = new ItemStack(itemIn);
+		if (tab != NHCore.CREATIVETAB) return;
+		ItemStack stack = new ItemStack(this);
         NBTTagCompound tag = new NBTTagCompound();
         tag.setInteger("theoneprobe", 1);
         stack.setTagCompound(tag);
-        subItems.add(stack);
+        items.add(stack);
 	}
 	
 	@Override

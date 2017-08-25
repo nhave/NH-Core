@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 public class TileEntityMachine extends TileEntity implements ILockableTile
 {
 	private String owner = "";
+	private boolean isPublic = false;
 	
 	public boolean onTileActivated(World world, int x, int y, int z, EntityPlayer player)
 	{
@@ -42,9 +43,23 @@ public class TileEntityMachine extends TileEntity implements ILockableTile
 	@Override
 	public void setOwner(String owner)
 	{
-		if (owner == null) owner = "";
+		if (owner == null)
+		{
+			owner = "";
+			this.isPublic = false;
+		}
 		this.owner = owner;
 		sync();
+	}
+	
+	public boolean isPublic()
+	{
+		return this.isPublic;
+	}
+	
+	public void setPublic()
+	{
+		this.isPublic = true;
 	}
 	
 	protected void sync()
@@ -64,6 +79,7 @@ public class TileEntityMachine extends TileEntity implements ILockableTile
 	{
 		NBTTagList tagList = new NBTTagList();
 		tag.setString("OWNER", this.owner);
+		tag.setBoolean("ISPUBLIC", this.isPublic);
 	}
 	
 	public void readFromNBT(NBTTagCompound tag)
@@ -77,6 +93,7 @@ public class TileEntityMachine extends TileEntity implements ILockableTile
 		NBTTagList items = tag.getTagList("ITEM", tag.getId());
 
 		this.owner = tag.getString("OWNER");
+		this.isPublic = tag.getBoolean("ISPUBLIC");
 	}
 	
 	@Override

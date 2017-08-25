@@ -9,7 +9,9 @@ item.nhc.chroma.name=Chroma
 item.nhc.token.name=Mysterious Token
 item.nhc.token_active.name=Token Of Gratitude
 item.nhc.lock.name=Machine Lock
+item.nhc.publiclock.name=Public Machine Lock
 item.nhc.key.name=Machine Key
+item.nhc.masterkey.name=Masters Skeleton Key
 item.nhc.energypearl.name=Energized Ender Pearl
 
 //---Blocks---//
@@ -23,7 +25,9 @@ tooltip.nhc.token=Only given to special;supporters of my mods.
 tooltip.nhc.token.deny=Its just a coin;with no value!
 tooltip.nhc.token.access=The coin is glowing faintly;in your hands.;Futher inspection needed!
 tooltip.nhc.lock=Sneak right click to lock machines;and make them private.
+tooltip.nhc.publiclock=Prevents anyone from locking;your public machines.
 tooltip.nhc.key=Sneak right click to unlock;your locked machines.
+tooltip.nhc.masterkey=Can unlock any machine;no matter the owner.
 tooltip.nhc.energypearl=This pearl constantly generates;a tiny amount of energy.;Enough to power simple devices.
 tooltip.nhc.error.missingnbt=!!MISSING NBT DATA!!
 tooltip.nhc.details.shift1=Hold
@@ -35,15 +39,20 @@ tooltip.nhc.details.alt3=for Mods
 tooltip.nhc.details.ctrl1=Hold
 tooltip.nhc.details.ctrl2=Ctrl
 tooltip.nhc.details.ctrl3=for Advanced Info
+tooltip.nhc.chroma=Used to change the color;of compatible items to %color%.
+tooltip.nhc.chroma.rainbow=A Chroma that shifts between;all the colors of the rainbow.
+tooltip.nhc.chroma.tracker=A Chroma that changes its color;when monster are nearby.
 tooltip.nhc.chroma.current=Active Chroma
 tooltip.nhc.shader=Item Shader
 tooltip.nhc.shader.appliesto=Can apply to
+tooltip.nhc.shader.nomods=No compatible mods installed!
 tooltip.nhc.toolstation=Place an item on top.;Then right click it with;another item to modify it.
 tooltip.nhc.toolstation.item=Item
 tooltip.nhc.toolstation.chroma=Chroma
 tooltip.nhc.display=Right click to display an item;Right click again to remove it.
 tooltip.nhc.display.item=Item
 tooltip.nhc.owner=Owner
+tooltip.nhc.publicmachine=Public Machine
 
 //---Colors---//
 color.nhc.black=Black

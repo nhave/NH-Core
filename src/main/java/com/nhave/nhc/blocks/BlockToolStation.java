@@ -6,12 +6,12 @@ import com.nhave.nhc.api.blocks.IHudBlock;
 import com.nhave.nhc.api.items.IToolStationHud;
 import com.nhave.nhc.helpers.ItemHelper;
 import com.nhave.nhc.helpers.TooltipHelper;
-import com.nhave.nhc.registry.ModItems;
 import com.nhave.nhc.tiles.TileEntityToolStation;
 import com.nhave.nhc.util.StringUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -90,15 +90,16 @@ public class BlockToolStation extends BlockMachineBase implements IHudBlock
     		if (world.getTileEntity(blockPos) != null)
     		{
     			TileEntityToolStation tile = (TileEntityToolStation) world.getTileEntity(blockPos);
-    			if (tile.hasOwner()) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(ModItems.itemLock));
+    			//if (tile.hasOwner()) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(ModItems.itemLock));
     			ItemStack stack = tile.getItemStack();
     			if (stack != null) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
     		}
         }
+		super.onBlockHarvested(world, blockPos, blockState, player);
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
 	{
 		if (StringUtils.isShiftKeyDown()) TooltipHelper.addSplitString(tooltip, StringUtils.localize("tooltip.nhc.toolstation"), ";", StringUtils.GRAY);
 		else tooltip.add(StringUtils.shiftForInfo);

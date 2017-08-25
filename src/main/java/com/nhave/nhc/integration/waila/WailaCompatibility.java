@@ -1,6 +1,6 @@
 package com.nhave.nhc.integration.waila;
 
-import java.util.ArrayList;
+/*import java.util.ArrayList;
 import java.util.List;
 
 import com.nhave.nhc.api.blocks.IHudBlock;
@@ -114,4 +114,4 @@ public class WailaCompatibility implements IWailaDataProvider
     {
         return currenttip;
     }
-}
+}*/

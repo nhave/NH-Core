@@ -64,7 +64,7 @@ public class MessageKeyPressed implements IMessage, IMessageHandler<MessageKeyPr
     @Override
     public IMessage onMessage(MessageKeyPressed message, MessageContext ctx)
     {
-        EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
+        EntityPlayer entityPlayer = ctx.getServerHandler().player;
         
         if (entityPlayer != null && entityPlayer.getHeldItemMainhand() != null)
         {

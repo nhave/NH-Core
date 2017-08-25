@@ -67,7 +67,7 @@ public class HudTickHandler
             int i = 0;
             for (String s : info)
             {
-                RenderUtils.drawStringAtHUDPosition(s, HUDPositions.values()[ModConfig.hudPosition], mc.fontRendererObj, ModConfig.hudOffsetX, ModConfig.hudOffsetY, ModConfig.hudScale, 0xeeeeee, true, i);
+                RenderUtils.drawStringAtHUDPosition(s, HUDPositions.values()[ModConfig.hudPosition], mc.fontRenderer, ModConfig.hudOffsetX, ModConfig.hudOffsetY, ModConfig.hudScale, 0xeeeeee, true, i);
                 i++;
             }
             

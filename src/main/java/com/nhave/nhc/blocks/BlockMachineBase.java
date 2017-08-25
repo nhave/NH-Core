@@ -128,6 +128,20 @@ public class BlockMachineBase extends BlockBase
 	}
 	
 	@Override
+	public void onBlockHarvested(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
+	{
+		if (!world.isRemote)
+        {
+			TileEntity tile = world.getTileEntity(blockPos);
+			if (tile instanceof ILockableTile)
+			{
+				ILockableTile lockable = (ILockableTile) world.getTileEntity(blockPos);
+				if (lockable.hasOwner()) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(lockable.isPublic() ? ModItems.itemPublicLock : ModItems.itemLock));
+			}
+        }
+	}
+	
+	@Override
 	public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis)
 	{
 		return false;
@@ -161,30 +175,45 @@ public class BlockMachineBase extends BlockBase
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		TileEntity tile = worldIn.getTileEntity(pos);
-		if (tile instanceof ILockableTile)
-		{
-			ILockableTile lockable = (ILockableTile) worldIn.getTileEntity(pos);
-			if (lockable.hasOwner() && !lockable.getOwner().equals(playerIn.getName())) return false;
-			
-			if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemLock && !lockable.hasOwner())
-			{
-				lockable.setOwner(playerIn.getName());
-				playerIn.getHeldItem(hand).shrink(1);
-				playerIn.swingArm(EnumHand.MAIN_HAND);
-				return !worldIn.isRemote;
-			}
-			else if (playerIn.isSneaking() && playerIn.getHeldItem(hand).getItem() == ModItems.itemKey && lockable.hasOwner())
-			{
-				lockable.setOwner(null);
-				ItemHelper.addItemToPlayer(playerIn, new ItemStack(ModItems.itemLock));
-				playerIn.swingArm(EnumHand.MAIN_HAND);
-				return !worldIn.isRemote;
-			}
-		}
 		if (hand == EnumHand.MAIN_HAND)
 		{
-			if (!playerIn.getHeldItemMainhand().isEmpty() && ItemHelper.isToolWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ()))
+			TileEntity tile = worldIn.getTileEntity(pos);
+			if (tile instanceof ILockableTile)
+			{
+				ILockableTile lockable = (ILockableTile) worldIn.getTileEntity(pos);
+				if (lockable.hasOwner())
+				{
+					if (playerIn.isSneaking() && ((lockable.getOwner().equals(playerIn.getName()) && playerIn.getHeldItem(hand).getItem() == ModItems.itemKey) || playerIn.getHeldItem(hand).getItem() == ModItems.itemMasterKey))
+					{
+						ItemHelper.addItemToPlayer(playerIn, new ItemStack(lockable.isPublic() ? ModItems.itemPublicLock : ModItems.itemLock));
+						lockable.setOwner(null);
+						playerIn.swingArm(EnumHand.MAIN_HAND);
+						return !worldIn.isRemote;
+					}
+					//else if (playerIn.isSneaking() && !lockable.getOwner().equals(playerIn.getName()) && ItemHelper.isToolWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ())) return false;
+					else if (!lockable.isPublic() && !lockable.getOwner().equals(playerIn.getName())) return false;
+				}
+				else if (playerIn.isSneaking() && (playerIn.getHeldItem(hand).getItem() == ModItems.itemLock || playerIn.getHeldItem(hand).getItem() == ModItems.itemPublicLock))
+				{
+					lockable.setOwner(playerIn.getName());
+					if (playerIn.getHeldItem(hand).getItem() == ModItems.itemPublicLock) lockable.setPublic();
+					playerIn.getHeldItem(hand).shrink(1);
+					playerIn.swingArm(EnumHand.MAIN_HAND);
+					return !worldIn.isRemote;
+				}
+			}
+			
+			boolean locked = false;
+			if (tile instanceof ILockableTile)
+			{
+				ILockableTile lockable = (ILockableTile) worldIn.getTileEntity(pos);
+				if (lockable.hasOwner() && !lockable.getOwner().equals(playerIn.getName()))
+				{
+					locked = true;
+				}
+			}
+			
+			if (!locked && !playerIn.getHeldItemMainhand().isEmpty() && ItemHelper.isToolWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ()))
 			{
 				if (playerIn.isSneaking())
 				{

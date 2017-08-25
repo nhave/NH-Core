@@ -17,19 +17,20 @@ import com.nhave.nhc.items.ItemChroma;
 import com.nhave.nhc.items.ItemDataglass;
 import com.nhave.nhc.items.ItemToken;
 import com.nhave.nhc.items.ItemWrench;
+import com.nhave.nhc.util.StringUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,7 +45,9 @@ public class ModItems
 	public static Item itemChroma;
 	public static Item itemToken;
 	public static Item itemLock;
+	public static Item itemPublicLock;
 	public static Item itemKey;
+	public static Item itemMasterKey;
 	public static Item itemEnergyPearl;
 	
 	public static Chroma[] chromaBasic = new Chroma[16];
@@ -59,9 +62,11 @@ public class ModItems
 		itemWrench = new ItemWrench("wrench");
 		itemChroma = new ItemChroma("chroma");
 		itemToken = new ItemToken("token");
-		itemLock = new ItemBase("lock").setSneakBypassUse().setShiftForDetails();
-		itemKey = new ItemBase("key").setSneakBypassUse().setShiftForDetails().setMaxStackSize(1);
-		itemEnergyPearl = new ItemBase("energypearl").setShiftForDetails();
+		itemLock = new ItemBase("lock").setQualityColor(StringUtils.LIGHT_BLUE).setSneakBypassUse().setShiftForDetails();
+		itemPublicLock = new ItemBase("publiclock").setQualityColor(StringUtils.LIGHT_BLUE).setSneakBypassUse().setShiftForDetails();
+		itemKey = new ItemBase("key").setQualityColor(StringUtils.LIGHT_BLUE).setSneakBypassUse().setShiftForDetails().setMaxStackSize(1);
+		itemMasterKey = new ItemBase("masterkey").setQualityColor(StringUtils.PINK).setSneakBypassUse().setShiftForDetails().setMaxStackSize(1);
+		itemEnergyPearl = new ItemBase("energypearl").setQualityColor(StringUtils.LIGHT_BLUE).setShiftForDetails();
 		
 		//ItemToken.ITEMS.add(itemDataGlass);
 		
@@ -73,35 +78,40 @@ public class ModItems
 		chromaTracker = ChromaRegistry.registerChroma("tracker", new ChromaTracker());
 	}
 	
-	public static void register()
+	public static void register(Register<Item> event)
 	{
-		GameRegistry.register(itemDataGlass);
-		GameRegistry.register(itemWrench);
-		GameRegistry.register(itemChroma);
-		GameRegistry.register(itemToken);
-		GameRegistry.register(itemLock);
-		GameRegistry.register(itemKey);
-		GameRegistry.register(itemEnergyPearl);
+		event.getRegistry().register(itemDataGlass);
+		event.getRegistry().register(itemWrench);
+		event.getRegistry().register(itemChroma);
+		event.getRegistry().register(itemToken);
+		event.getRegistry().register(itemLock);
+		event.getRegistry().register(itemPublicLock);
+		event.getRegistry().register(itemKey);
+		event.getRegistry().register(itemMasterKey);
+		event.getRegistry().register(itemEnergyPearl);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerRenders()
 	{
-		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + itemDataGlass.getRegistryName().getResourcePath()));
-		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + itemDataGlass.getRegistryName().getResourcePath() + "_gold"));
-		ModelBakery.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + "focus"));
 		registerRenderMesh(itemDataGlass, new CustomMeshDefinitionDataGlass());
+		ModelLoader.registerItemVariants(itemDataGlass, new ResourceLocation(Reference.MODID + ":" + itemDataGlass.getRegistryName().getResourcePath()), new ResourceLocation(Reference.MODID + ":" + itemDataGlass.getRegistryName().getResourcePath() + "_gold"), new ResourceLocation(Reference.MODID + ":" + "focus"));
 		
-		ModelBakery.registerItemVariants(itemToken, new ResourceLocation(Reference.MODID + ":" + itemToken.getRegistryName().getResourcePath()));
-		ModelBakery.registerItemVariants(itemToken, new ResourceLocation(Reference.MODID + ":" + "token_active"));
 		registerRenderMesh(itemToken, new CustomMeshDefinitionToken());
+		ModelLoader.registerItemVariants(itemToken, new ResourceLocation(Reference.MODID + ":" + itemToken.getRegistryName().getResourcePath()), new ResourceLocation(Reference.MODID + ":" + "token_active"));
 		
 		registerRender(itemWrench);
 		registerRender(itemChroma);
 		registerRender(itemLock);
+		registerRender(itemPublicLock);
 		registerRender(itemKey);
+		registerRender(itemMasterKey);
 		registerRender(itemEnergyPearl);
-		
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void registerRenderData()
+	{
 		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemDataGlass);		
 		FMLClientHandler.instance().getClient().getItemColors().registerItemColorHandler(ItemColorHandler.INSTANCE, itemChroma);
 		
@@ -119,14 +129,15 @@ public class ModItems
 	public static void registerRender(Item item)
 	{
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		renderItem.getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MODID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
+		//renderItem.getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MODID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Reference.MODID + ":" + item.getRegistryName().getResourcePath(), "inventory"));
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerRenderMesh(Item item, ItemMeshDefinition mesh)
 	{
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		
-		renderItem.getItemModelMesher().register(item, mesh);
+		//renderItem.getItemModelMesher().register(item, mesh);
+		ModelLoader.setCustomMeshDefinition(item, mesh);
 	}
 }
