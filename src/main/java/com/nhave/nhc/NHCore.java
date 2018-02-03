@@ -21,7 +21,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-//@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.MCVERSIONS, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUIFACTORY)
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, guiFactory = Reference.GUIFACTORY)
 public class NHCore
 {
@@ -41,11 +40,6 @@ public class NHCore
 		
 		PacketHandler.init();
 		proxy.registerKeybindings();
-		
-    	/*ModItems.init();
-    	ModItems.register();
-    	ModBlocks.init();
-    	ModBlocks.register();*/
 		
 		MinecraftForge.EVENT_BUS.register(new RegistryHandler());
     	

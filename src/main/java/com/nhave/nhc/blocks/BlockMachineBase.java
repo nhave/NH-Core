@@ -139,6 +139,7 @@ public class BlockMachineBase extends BlockBase
 				if (lockable.hasOwner()) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(lockable.isPublic() ? ModItems.itemPublicLock : ModItems.itemLock));
 			}
         }
+	    world.removeTileEntity(blockPos);
 	}
 	
 	@Override
@@ -217,9 +218,9 @@ public class BlockMachineBase extends BlockBase
 			{
 				if (playerIn.isSneaking())
 				{
+					ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);
 					if (!worldIn.isRemote)
 					{
-						ItemHelper.dismantleBlock(worldIn, pos, state, playerIn);
 						ItemHelper.useWrench(playerIn, playerIn.getHeldItemMainhand(), pos.getX(), pos.getY(), pos.getZ());
 						return true;
 					}
