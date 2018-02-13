@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -54,12 +55,12 @@ public class ItemHelper
 	 */
 	public static ItemStack getCurrentItemOrArmor(EntityPlayer player, int slot)
 	{
-		if (slot == 0) return player.getHeldItemMainhand();
-		else if (slot == 1) return player.getHeldItemOffhand();
-		else if (slot == 2) return player.inventory.armorItemInSlot(0);
-		else if (slot == 3) return player.inventory.armorItemInSlot(1);
-		else if (slot == 4) return player.inventory.armorItemInSlot(2);
-		else if (slot == 5) return player.inventory.armorItemInSlot(3);
+		if (slot == 0) return player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+		else if (slot == 1) return player.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+		else if (slot == 2) return player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+		else if (slot == 3) return player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+		else if (slot == 4) return player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+		else if (slot == 5) return player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
 		else return null;
 	}
 	
