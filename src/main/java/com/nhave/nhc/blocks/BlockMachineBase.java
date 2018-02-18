@@ -139,7 +139,7 @@ public class BlockMachineBase extends BlockBase
 				if (lockable.hasOwner()) ItemHelper.dropBlockAsItem(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(lockable.isPublic() ? ModItems.itemPublicLock : ModItems.itemLock));
 			}
         }
-	    world.removeTileEntity(blockPos);
+		else world.removeTileEntity(blockPos);
 	}
 	
 	@Override
