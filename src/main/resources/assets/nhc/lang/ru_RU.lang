@@ -1,0 +1,86 @@
+//---Creative Tab---//
+itemGroup.nhcore=NHAVE's Core
+
+//---Items---//
+item.nhc.wrench.name=Гаечный ключ
+item.nhc.shader_remover.name=Удалитель шейдеров
+item.nhc.data_glass.name=Стекло данных
+item.nhc.chroma.name=Цветность
+item.nhc.token.name=Таинственный знак
+item.nhc.token_active.name=Знак благодарности
+item.nhc.lock.name=Блокировка механихма
+item.nhc.publiclock.name=Публичная блокировка механизхма
+item.nhc.key.name=Ключ механизма
+item.nhc.masterkey.name=Мастерский скелетный ключ
+item.nhc.energypearl.name=Энергетический жемчуг эндера
+
+//---Blocks---//
+tile.nhc.frame.name=Рамка механизма
+tile.nhc.toolstation.name=Инструментальная станция
+tile.nhc.display.name=Дисплей предмета
+
+//---Tooltip---//
+tooltip.nhc.data_glass=Отображает данные совместимых;предметов на графическом интерфейсе
+tooltip.nhc.token=Только для специальных;сторонников моих модов.
+tooltip.nhc.token.deny=Это всего лишь монета;без ценности!
+tooltip.nhc.token.access=Монета светится слабо;в Ваших руках.;Необходим дальнейший осмотр!
+tooltip.nhc.lock=Shift+ПКМ для блокировки механизма;и сделать его частным.
+tooltip.nhc.publiclock=Предотвращает блокировку;Ваших публичных механизмов.
+tooltip.nhc.key=Shift+ПКМ для разблокировки;Ваших заблокированных механизмов.
+tooltip.nhc.masterkey=Может разблокировать любой механизм;независимо от ее владельца.
+tooltip.nhc.energypearl=Эта жемчужина постоянно генерирует;крошечное количество энергии.;Достаточной мощности для простых устройств.
+tooltip.nhc.error.missingnbt=!!ОТСУТСТВУЮТ NBT ДАННЫЕ!!
+tooltip.nhc.details.shift1=Зажмите
+tooltip.nhc.details.shift2=Shift
+tooltip.nhc.details.shift3=для деталей
+tooltip.nhc.details.alt1=Зажмите
+tooltip.nhc.details.alt2=Alt
+tooltip.nhc.details.alt3=для модов
+tooltip.nhc.details.ctrl1=Зажмите
+tooltip.nhc.details.ctrl2=Ctrl
+tooltip.nhc.details.ctrl3=для расширенной информации
+tooltip.nhc.chroma=Используется для изменения цвета;совместимых предметов в %color%.
+tooltip.nhc.chroma.rainbow=A Chroma that shifts between;all the colors of the rainbow.
+tooltip.nhc.chroma.tracker=A Chroma that changes its color;when monster are nearby.
+tooltip.nhc.chroma.current=Активная цветность
+tooltip.nhc.shader=Шейдер предмета
+tooltip.nhc.shader.appliesto=Можно применить к
+tooltip.nhc.shader.nomods=Не установлены совместимые моды!
+tooltip.nhc.toolstation=Поместите предмет сверху.;Затем ПКМ с;другим предметов, чтобы модифицировать его.
+tooltip.nhc.toolstation.item=Предмет
+tooltip.nhc.toolstation.chroma=Цветность
+tooltip.nhc.display=ПКМ чтобы отобразить предмет;ПКМ опять, чтобы удалить его.
+tooltip.nhc.display.item=Предмет
+tooltip.nhc.owner=Владелец
+tooltip.nhc.publicmachine=Публичный механизм
+
+//---Colors---//
+color.nhc.black=Черный
+color.nhc.red=Красный
+color.nhc.green=Зеленый
+color.nhc.brown=Коричневый
+color.nhc.blue=Синий
+color.nhc.purple=Фиолетовый
+color.nhc.cyan=Голубой
+color.nhc.lightGray=Светло-серый
+color.nhc.gray=Серый
+color.nhc.pink=Розовый
+color.nhc.lime=Лаймовый
+color.nhc.yellow=Желтый
+color.nhc.lightBlue=Светло-синий
+color.nhc.magenta=Пурпурный
+color.nhc.orange=Оранжевый
+color.nhc.white=Белый
+color.nhc.rainbow=Радужный
+color.nhc.tracker=Трекер
+
+//---Config---//
+key.nhc.category=Модификации NHAVE's
+key.nhc.toggle=Режим переключения
+cfg.nhc.title.main=Меню конфигурации NHAVE's Core
+cfg.nhc.title.client=Конфигурации клиентов NHAVE's Core
+cfg.nhc.entry.client=Конфигурация клиента
+cfg.nhc.entry.client.tooltip=Все параметры клиента
+cfg.nhc.title.common=Общие конфигурации NHAVE's Core
+cfg.nhc.entry.common=Общая конфигурация
+cfg.nhc.entry.common.tooltip=Все общие параметры
